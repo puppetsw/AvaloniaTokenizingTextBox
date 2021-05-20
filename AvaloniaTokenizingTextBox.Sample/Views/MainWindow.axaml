@@ -13,7 +13,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<c:TokenizingTextBox InputText="Test" Width="100" Height="100"/>
+	<c:TokenizingTextBox InputText="Test" Width="500" Height="100"/>
     
 	
 	

@@ -9,5 +9,9 @@ namespace AvaloniaTokenizingTextBox.Controls
 {
     public class TokenizingTextBoxItem : ListBoxItem
     {
+        public TokenizingTextBoxItem()
+        {
+            
+        }
     }
 }

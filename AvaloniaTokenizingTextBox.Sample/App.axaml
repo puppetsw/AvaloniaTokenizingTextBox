@@ -8,6 +8,7 @@
 
     <Application.Styles>
 		<StyleInclude Source="avares://AvaloniaTokenizingTextBox/Styles/TokenizingTextBox.xaml"/>
+		<StyleInclude Source="avares://AvaloniaTokenizingTextBox/Styles/TokenizingTextBoxItem.xaml"/>
 		
         <FluentTheme Mode="Light"/>
     </Application.Styles>

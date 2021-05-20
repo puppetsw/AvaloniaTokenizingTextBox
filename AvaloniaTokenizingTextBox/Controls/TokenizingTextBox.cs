@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Controls.Generators;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -36,6 +37,14 @@ namespace AvaloniaTokenizingTextBox.Controls
             SelectionModeProperty.OverrideMetadata(typeof(TokenizingTextBox), new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
 
+        protected override IItemContainerGenerator CreateItemContainerGenerator()
+        {
+            return new ItemContainerGenerator<TokenizingTextBoxItem>(
+                this,
+                TokenizingTextBoxItem.ContentProperty,
+                TokenizingTextBoxItem.ContentTemplateProperty);
+        }
+
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
             base.OnApplyTemplate(e);
@@ -44,6 +53,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             {
                 _textBox.KeyDown -= TextBox_KeyDown;
                 _textBox.RemoveHandler(TextInputEvent, TextBox_TextChanged);
+                //_textBox.TextInput -= TextBox_TextChanged;
             }
 
             _textBox = (TextBox)e.NameScope.Get<Control>(PART_TextBox);
@@ -53,10 +63,11 @@ namespace AvaloniaTokenizingTextBox.Controls
             {
                 _textBox.KeyDown += TextBox_KeyDown;
                 _textBox.AddHandler(TextInputEvent, TextBox_TextChanged, RoutingStrategies.Tunnel);
+                //_textBox.TextInput += TextBox_TextChanged; //TextInput doesn't work?
             }
         }
 
-        private void TextBox_TextChanged(object? sender, TextInputEventArgs e) 
+        private void TextBox_TextChanged(object? sender, TextInputEventArgs e)
         {
             string t = _textBox.Text;
 
@@ -117,7 +128,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             base.ItemsChanged(e);
         }
 
-        private void AddToken() 
+        private void AddToken()
         {
             var text = _textBox.Text;
             _textBox.Text = string.Empty;

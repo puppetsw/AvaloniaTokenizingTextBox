@@ -6,8 +6,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Styles\TokenizingTextBox.xaml" />
+    <None Remove="Styles\TokenizingTextBoxItem.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Include="Styles\TokenizingTextBoxItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
     <AvaloniaResource Include="Styles\TokenizingTextBox.xaml">
       <Generator></Generator>
     </AvaloniaResource>

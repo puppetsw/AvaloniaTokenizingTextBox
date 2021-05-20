@@ -2,13 +2,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
     <Style Selector="Controls|TokenizingTextBox">
-        <Setter Property="Template">
+		<!--<Setter Property="ItemTemplate">
+			<DataTemplate>
+				<StackPanel Orientation="Horizontal" DataContext="{Binding}"/>
+			</DataTemplate>
+		</Setter>-->
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <WrapPanel x:Name="PART_WrapPanel">
-							<ItemsPresenter />
-                            <TextBox x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"/>
+                        <WrapPanel x:Name="PART_WrapPanel" >
+							<ItemsPresenter Items="{TemplateBinding Items}"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}"
+								            ItemTemplate="{TemplateBinding ItemTemplate}" 
+											/>
+                            <TextBox Width="300" x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"/>
                         </WrapPanel>
                     </Grid>
                 </ControlTemplate>
