@@ -12,8 +12,9 @@ namespace AvaloniaTokenizingTextBox.Controls
     public class TokenizingTextBox : ListBox
     {
         private const string PART_TextBox = "PART_TextBox";
-        private const string PART_Border = "PART_Border";
+        private const string PART_WrapPanel = "PART_WrapPanel";
         private TextBox? _textBox;
+        private WrapPanel? _wrapPanel;
 
         /// <summary>
         /// Gets or sets SearchText.
@@ -46,6 +47,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             }
 
             _textBox = (TextBox)e.NameScope.Get<Control>(PART_TextBox);
+            _wrapPanel = (WrapPanel)e.NameScope.Get<Control>(PART_WrapPanel);
 
             if (_textBox != null)
             {

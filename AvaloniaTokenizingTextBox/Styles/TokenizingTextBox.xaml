@@ -1,4 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
     <Style Selector="Controls|TokenizingTextBox">
@@ -6,7 +6,10 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <TextBox x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"/>
+                        <WrapPanel x:Name="PART_WrapPanel">
+							<ItemsPresenter />
+                            <TextBox x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"/>
+                        </WrapPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
