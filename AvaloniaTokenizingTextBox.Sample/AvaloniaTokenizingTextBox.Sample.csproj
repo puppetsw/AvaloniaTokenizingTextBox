@@ -14,4 +14,7 @@
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AvaloniaTokenizingTextBox\AvaloniaTokenizingTextBox.csproj" />
+  </ItemGroup>
 </Project>

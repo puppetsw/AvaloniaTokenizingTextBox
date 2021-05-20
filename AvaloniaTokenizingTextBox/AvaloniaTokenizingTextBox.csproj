@@ -5,12 +5,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\TokenizingTextBox.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Styles\TokenizingTextBox.xaml">
+      <Generator></Generator>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.5" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>
