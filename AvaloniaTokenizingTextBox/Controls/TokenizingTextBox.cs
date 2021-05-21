@@ -25,7 +25,7 @@ namespace AvaloniaTokenizingTextBox.Controls
         public static readonly DirectProperty<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>> TokenItemsProperty =
                         AvaloniaProperty.RegisterDirect<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>>(
                         nameof(TokenItems),
-                        o => o.TokenItems);
+                        o => o.TokenItems, (o, v)=> o.TokenItems = v);
 
         private ObservableCollection<TokenizingTextBoxItem> _tokenItems = new();
 
@@ -53,10 +53,12 @@ namespace AvaloniaTokenizingTextBox.Controls
         public TokenizingTextBox()
         {
             Items = new ObservableCollection<TokenizingTextBoxItem>();
+            TokenItems = new ObservableCollection<TokenizingTextBoxItem>();
         }
 
         static TokenizingTextBox()
         {
+
         }
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
