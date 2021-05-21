@@ -1,12 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
-    <Style Selector="Controls|TokenizingTextBox">
-		<!--<Setter Property="ItemTemplate">
-			<DataTemplate>
-				<StackPanel Orientation="Horizontal" DataContext="{Binding}"/>
-			</DataTemplate>
-		</Setter>-->
+	<Style Selector="Controls|TokenizingTextBox">
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>
@@ -14,22 +9,26 @@
 				</ItemsPanelTemplate>
 			</Setter.Value>
 		</Setter>
-
+        <Setter Property="Focusable" Value="False" />
 		<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Grid>
-                        <WrapPanel x:Name="PART_WrapPanel" >
-							<ItemsPresenter Items="{TemplateBinding Items}"
-                                            ItemsPanel="{TemplateBinding ItemsPanel}"
-								            ItemTemplate="{TemplateBinding ItemTemplate}" 
+					<Controls:TokenizingWrapPanel x:Name="PART_WrapPanel" Margin="5" HorizontalSpacing="5" StretchChild="Last">
+						<ItemsPresenter Name="PART_ItemsPresenter"
+										Items="{TemplateBinding Items}"
+										ItemsPanel="{TemplateBinding ItemsPanel}"
+										ItemTemplate="{TemplateBinding ItemTemplate}"
+										VirtualizationMode="{TemplateBinding VirtualizationMode}"
 											/>
-                            <TextBox Width="300" x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"/>
-                        </WrapPanel>
-                    </Grid>
+						<TextBox x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
+								 BorderThickness="0,0,0,1"
+								 Padding="5,2"
+								 VerticalContentAlignment="Center"
+								 MinHeight="25"
+									 />
+					</Controls:TokenizingWrapPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </Styles>

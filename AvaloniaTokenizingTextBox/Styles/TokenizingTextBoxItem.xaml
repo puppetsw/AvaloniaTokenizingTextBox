@@ -2,10 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
     <Style Selector="Controls|TokenizingTextBoxItem">
+		<Setter Property="MinHeight" Value="25"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:TokenizingTextBoxItem">
-					<Border Name="Border">
+					<Border Name="Border"
+							BorderBrush="Blue"
+							Background="AliceBlue"
+							BorderThickness="0,0,0,1"
+                            CornerRadius="2"
+                            Padding="5,0"
+							>
 						<ContentPresenter Name="ContentPresenter"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"

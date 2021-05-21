@@ -6,7 +6,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System;
-using System.Collections.Generic;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
@@ -18,23 +17,29 @@ namespace AvaloniaTokenizingTextBox.Controls
         private WrapPanel? _wrapPanel;
 
         /// <summary>
-        /// Gets or sets SearchText.
-        /// </summary>
-        public string InputText
-        {
-            get { return (string)GetValue(InputTextProperty); }
-            set { SetValue(InputTextProperty, value); }
-        }
-
-        /// <summary>
         /// Defines the SearchText property.
         /// </summary>
         public static readonly StyledProperty<string> InputTextProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(InputText));
 
+        public static readonly StyledProperty<string> TokenDelimiterProperty =
+        AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(TokenDelimiter));
+
+        public string InputText
+        {
+            get => GetValue(InputTextProperty);
+            set => SetValue(InputTextProperty, value);
+        }
+
+        public string TokenDelimiter
+        {
+            get => GetValue(TokenDelimiterProperty);
+            set => SetValue(TokenDelimiterProperty, value);
+        }
+
         public TokenizingTextBox()
         {
-            SelectionModeProperty.OverrideMetadata(typeof(TokenizingTextBox), new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
+            //SelectionModeProperty.OverrideMetadata(typeof(TokenizingTextBox), new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
         }
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
@@ -53,7 +58,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             {
                 _textBox.KeyDown -= TextBox_KeyDown;
                 _textBox.RemoveHandler(TextInputEvent, TextBox_TextChanged);
-                //_textBox.TextInput -= TextBox_TextChanged;
+                //_textBox.TextInput -= TextBox_TextChanged; //TextInput doesn't work?
             }
 
             _textBox = (TextBox)e.NameScope.Get<Control>(PART_TextBox);
@@ -69,15 +74,17 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         private void TextBox_TextChanged(object? sender, TextInputEventArgs e)
         {
-            string t = _textBox.Text;
+            string text = _textBox.Text;
 
-            if (t == null) return;
+            if (text == null) return;
 
-            if (!string.IsNullOrEmpty(" ") && t.Contains(" "))
+            if (!string.IsNullOrEmpty(TokenDelimiter) && e.Text.Contains(TokenDelimiter)) //t.Contains(TokenDelimiter))
             {
-                bool lastDelimited = t[t.Length - 1] == " "[0];
+                string t = text + e.Text;
 
-                string[] tokens = t.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                bool lastDelimited = t[t.Length - 1] == TokenDelimiter[0];
+
+                string[] tokens = t.Split(new[] { TokenDelimiter }, StringSplitOptions.RemoveEmptyEntries);
                 int numberToProcess = lastDelimited ? tokens.Length : tokens.Length - 1;
                 for (int position = 0; position < numberToProcess; position++)
                 {
@@ -93,6 +100,7 @@ namespace AvaloniaTokenizingTextBox.Controls
                     _textBox.Text = tokens[tokens.Length - 1];
                     _textBox.CaretIndex = _textBox.Text.Length;
                 }
+                e.Handled = true; //handle the event so the delimiter doesn't display
             }
         }
 
@@ -104,7 +112,7 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e) { }
 
-        private void AddToken(string token) 
+        private void AddToken(string token)
         {
             if (token.Length > 0)
             {
@@ -119,7 +127,6 @@ namespace AvaloniaTokenizingTextBox.Controls
 
                 Items = tokens;
             }
-
         }
 
         protected override void ItemsChanged(AvaloniaPropertyChangedEventArgs e)

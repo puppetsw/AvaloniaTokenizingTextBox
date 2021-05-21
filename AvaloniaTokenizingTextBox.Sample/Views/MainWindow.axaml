@@ -13,9 +13,17 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<c:TokenizingTextBox InputText="Test" Width="500" Height="100"/>
-    
-	
+	<DockPanel>
+		<c:TokenizingTextBox Name="txtBox"
+			                 DockPanel.Dock="Top"
+							 TokenDelimiter=";"
+							 Items="{Binding Tokens}"
+						 />
+        <ListBox Items="{Binding #txtBox.Items}" />
+		<!--<ListBox Items="{Binding Tokens}" />-->
+		<Button Command="{Binding TestCommand}" Content="Test"/>
+		
+	</DockPanel>
 	
 
 </Window>
