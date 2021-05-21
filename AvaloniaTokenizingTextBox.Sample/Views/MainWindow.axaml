@@ -18,6 +18,7 @@
 			                 DockPanel.Dock="Top"
 							 TokenDelimiter=";"
 							 TokenItems="{Binding Tokens}"
+							 SelectedItem="{Binding SelectedItem}"
 						 />
         <!--<ListBox Items="{Binding #txtBox.Items}" />-->
 		<ListBox Items="{Binding Tokens}" />

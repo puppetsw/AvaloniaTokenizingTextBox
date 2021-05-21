@@ -9,9 +9,10 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ObservableCollection<TokenizingTextBoxItem> tokens;
+        private ObservableCollection<string> tokens;
 
-        public ObservableCollection<TokenizingTextBoxItem> Tokens
+        public TokenizingTextBoxItem SelectedItem { get; set; }
+        public ObservableCollection<string> Tokens
         {
             get { return tokens; }
             set { this.RaiseAndSetIfChanged(ref tokens, value); }
@@ -21,7 +22,7 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 
         public MainWindowViewModel()
         {
-            Tokens = new ObservableCollection<TokenizingTextBoxItem>();
+            Tokens = new ObservableCollection<string>();
             TestCommand = ReactiveCommand.Create(Test);
 
         }

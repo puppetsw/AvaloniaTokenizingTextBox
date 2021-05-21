@@ -15,16 +15,16 @@
                 <ControlTemplate>
 					<Controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="5" HorizontalSpacing="5" StretchChild="Last">
 						<ItemsPresenter Name="PART_ItemsPresenter"
-										Items="{TemplateBinding TokenItems}"
+										Items="{TemplateBinding Items}"
 										ItemsPanel="{TemplateBinding ItemsPanel}"
 										ItemTemplate="{TemplateBinding ItemTemplate}"
 											/>
-						<TextBox Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
-								 BorderThickness="0,0,0,1"
-								 Padding="5,2"
-								 VerticalContentAlignment="Center"
-								 MinHeight="25"
-									 />
+						<Controls:TokenTextBox Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
+											   BorderThickness="0,0,0,1"
+			  								   Padding="5,2"
+											   VerticalContentAlignment="Center"
+											   MinHeight="25"
+											/>
 					</Controls:TokenizingWrapPanel>
                 </ControlTemplate>
             </Setter.Value>

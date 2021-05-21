@@ -9,12 +9,13 @@ using System.Collections.ObjectModel;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
-    public class TokenizingTextBox : ItemsControl
+    public class TokenizingTextBox : ListBox
     {
         private const string PART_TextBox = "PART_TextBox";
         private const string PART_WrapPanel = "PART_WrapPanel";
-        private TextBox? _textBox;
+        private TokenTextBox? _textBox;
         private WrapPanel? _wrapPanel;
+        private ObservableCollection<string> _tokenItems;
 
         public static readonly StyledProperty<string> InputTextProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(InputText));
@@ -22,14 +23,12 @@ namespace AvaloniaTokenizingTextBox.Controls
         public static readonly StyledProperty<string> TokenDelimiterProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(TokenDelimiter));
 
-        public static readonly DirectProperty<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>> TokenItemsProperty =
-                        AvaloniaProperty.RegisterDirect<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>>(
+        public static readonly DirectProperty<TokenizingTextBox, ObservableCollection<string>> TokenItemsProperty =
+                        AvaloniaProperty.RegisterDirect<TokenizingTextBox, ObservableCollection<string>>(
                         nameof(TokenItems),
                         o => o.TokenItems, (o, v)=> o.TokenItems = v);
-
-        private ObservableCollection<TokenizingTextBoxItem> _tokenItems = new();
-
-        public ObservableCollection<TokenizingTextBoxItem> TokenItems
+        
+        public ObservableCollection<string> TokenItems
         {
             get { return _tokenItems; }
             set
@@ -52,13 +51,8 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         public TokenizingTextBox()
         {
-            Items = new ObservableCollection<TokenizingTextBoxItem>();
-            TokenItems = new ObservableCollection<TokenizingTextBoxItem>();
-        }
-
-        static TokenizingTextBox()
-        {
-
+            _tokenItems = new ObservableCollection<string>();
+            //Items = new ObservableCollection<TokenizingTextBoxItem>();
         }
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
@@ -75,21 +69,25 @@ namespace AvaloniaTokenizingTextBox.Controls
 
             if (_textBox != null)
             {
-                _textBox.KeyDown -= TextBox_KeyDown;
+                //_textBox.KeyDown -= TextBox_KeyDown;
                 _textBox.RemoveHandler(TextInputEvent, TextBox_TextChanged);
+                _textBox.MyKeyDown -= TextBox_KeyDown;
                 //_textBox.TextInput -= TextBox_TextChanged; //TextInput doesn't work?
             }
 
-            _textBox = (TextBox)e.NameScope.Get<Control>(PART_TextBox);
+            _textBox = (TokenTextBox)e.NameScope.Get<Control>(PART_TextBox);
             _wrapPanel = (WrapPanel)e.NameScope.Get<Control>(PART_WrapPanel);
 
             if (_textBox != null)
             {
-                _textBox.KeyDown += TextBox_KeyDown;
+                //_textBox.KeyDown += TextBox_KeyDown;
                 _textBox.AddHandler(TextInputEvent, TextBox_TextChanged, RoutingStrategies.Tunnel);
+                _textBox.MyKeyDown += TextBox_KeyDown;
                 //_textBox.TextInput += TextBox_TextChanged; //TextInput doesn't work?
             }
         }
+
+
 
         private void TextBox_TextChanged(object? sender, TextInputEventArgs e)
         {
@@ -123,7 +121,34 @@ namespace AvaloniaTokenizingTextBox.Controls
             }
         }
 
-        private void TextBox_KeyDown(object? sender, KeyEventArgs e) { }
+        private void TextBox_KeyDown(object? sender, KeyEventArgs e) 
+        {
+            int currentCursorPosition = _textBox.SelectionStart;
+            var isEmpty = string.IsNullOrWhiteSpace(_textBox.Text);
+            int selectionLength = currentCursorPosition + _textBox.SelectionEnd;
+            int itemsCount = TokenCount();
+            switch (e.Key)
+            {
+                case Key.Back when currentCursorPosition == 0 && selectionLength == 0 && itemsCount > 0:
+                    e.Handled = true;
+                    var container = ItemContainerGenerator.ContainerFromIndex(itemsCount - 1);
+                    if (container is TokenizingTextBoxItem element)
+                        element.Focus();
+                    break;
+            }
+
+
+        }
+
+        private int TokenCount()
+        {
+            int count = 0;
+            foreach (var item in Items)
+            {
+                count++;
+            }
+            return count;
+        }
 
         private void AddToken(string token)
         {
@@ -137,8 +162,9 @@ namespace AvaloniaTokenizingTextBox.Controls
                 }
 
                 tokens.Add(new TokenizingTextBoxItem() { Content = token });
+                //Items.Add(new TokenizingTextBoxItem() { Content = token });
+                TokenItems.Add(token);
                 Items = tokens;
-                TokenItems.Add(new TokenizingTextBoxItem() { Content = token });
             }
         }
 
