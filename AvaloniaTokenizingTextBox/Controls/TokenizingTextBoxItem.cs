@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
-    public class TokenizingTextBoxItem : ListBoxItem
+    public class TokenizingTextBoxItem : ContentControl, ISelectable
     {
         public TokenizingTextBoxItem()
         {
             
         }
+
+        public bool IsSelected { get; set; }
     }
 }

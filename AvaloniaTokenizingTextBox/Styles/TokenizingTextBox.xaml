@@ -13,14 +13,13 @@
 		<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-					<Controls:TokenizingWrapPanel x:Name="PART_WrapPanel" Margin="5" HorizontalSpacing="5" StretchChild="Last">
+					<Controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="5" HorizontalSpacing="5" StretchChild="Last">
 						<ItemsPresenter Name="PART_ItemsPresenter"
-										Items="{TemplateBinding Items}"
+										Items="{TemplateBinding TokenItems}"
 										ItemsPanel="{TemplateBinding ItemsPanel}"
 										ItemTemplate="{TemplateBinding ItemTemplate}"
-										VirtualizationMode="{TemplateBinding VirtualizationMode}"
 											/>
-						<TextBox x:Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
+						<TextBox Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
 								 BorderThickness="0,0,0,1"
 								 Padding="5,2"
 								 VerticalContentAlignment="Center"

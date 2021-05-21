@@ -1,29 +1,42 @@
 ﻿using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Generators;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System;
+using System.Collections.ObjectModel;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
-    public class TokenizingTextBox : ListBox
+    public class TokenizingTextBox : ItemsControl
     {
         private const string PART_TextBox = "PART_TextBox";
         private const string PART_WrapPanel = "PART_WrapPanel";
         private TextBox? _textBox;
         private WrapPanel? _wrapPanel;
 
-        /// <summary>
-        /// Defines the SearchText property.
-        /// </summary>
         public static readonly StyledProperty<string> InputTextProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(InputText));
 
         public static readonly StyledProperty<string> TokenDelimiterProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(TokenDelimiter));
+
+        public static readonly DirectProperty<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>> TokenItemsProperty =
+                        AvaloniaProperty.RegisterDirect<TokenizingTextBox, ObservableCollection<TokenizingTextBoxItem>>(
+                        nameof(TokenItems),
+                        o => o.TokenItems);
+
+        private ObservableCollection<TokenizingTextBoxItem> _tokenItems = new();
+
+        public ObservableCollection<TokenizingTextBoxItem> TokenItems
+        {
+            get { return _tokenItems; }
+            set
+            {
+                SetAndRaise(TokenItemsProperty, ref _tokenItems, value);
+            }
+        }
 
         public string InputText
         {
@@ -39,7 +52,11 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         public TokenizingTextBox()
         {
-            //SelectionModeProperty.OverrideMetadata(typeof(TokenizingTextBox), new StyledPropertyMetadata<SelectionMode>(SelectionMode.Multiple));
+            Items = new ObservableCollection<TokenizingTextBoxItem>();
+        }
+
+        static TokenizingTextBox()
+        {
         }
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
@@ -104,42 +121,36 @@ namespace AvaloniaTokenizingTextBox.Controls
             }
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-
-            base.OnKeyDown(e);
-        }
-
         private void TextBox_KeyDown(object? sender, KeyEventArgs e) { }
 
         private void AddToken(string token)
         {
             if (token.Length > 0)
             {
-                var tokens = new AvaloniaList<string>();
+                var tokens = new ObservableCollection<TokenizingTextBoxItem>();
 
                 foreach (var item in Items)
                 {
-                    tokens.Add((string)item);
+                    tokens.Add((TokenizingTextBoxItem)item);
                 }
 
-                tokens.Add(token);
-
+                tokens.Add(new TokenizingTextBoxItem() { Content = token });
                 Items = tokens;
+                TokenItems.Add(new TokenizingTextBoxItem() { Content = token });
             }
         }
 
-        protected override void ItemsChanged(AvaloniaPropertyChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Create Token?");
-            base.ItemsChanged(e);
-        }
+        //protected override void ItemsChanged(AvaloniaPropertyChangedEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("Create Token?");
+        //    base.ItemsChanged(e);
+        //}
 
-        private void AddToken()
-        {
-            var text = _textBox.Text;
-            _textBox.Text = string.Empty;
-            AddToken(text);
-        }
+        //private void AddToken()
+        //{
+        //    var text = _textBox.Text;
+        //    _textBox.Text = string.Empty;
+        //    AddToken(text);
+        //}
     }
 }

@@ -18,8 +18,8 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 
         public ICommand TestCommand { get; }
 
-        public MainWindowViewModel() 
-        { 
+        public MainWindowViewModel()
+        {
             Tokens = new ObservableCollection<string>();
             TestCommand = ReactiveCommand.Create(Test);
 

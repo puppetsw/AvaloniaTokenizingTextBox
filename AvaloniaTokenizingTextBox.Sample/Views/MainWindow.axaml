@@ -17,10 +17,10 @@
 		<c:TokenizingTextBox Name="txtBox"
 			                 DockPanel.Dock="Top"
 							 TokenDelimiter=";"
-							 Items="{Binding Tokens}"
+							 TokenItems="{Binding Tokens}"
 						 />
-        <ListBox Items="{Binding #txtBox.Items}" />
-		<!--<ListBox Items="{Binding Tokens}" />-->
+        <!--<ListBox Items="{Binding #txtBox.Items}" />-->
+		<ListBox Items="{Binding Tokens}" />
 		<Button Command="{Binding TestCommand}" Content="Test"/>
 		
 	</DockPanel>
