@@ -13,7 +13,7 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            //bubble up event here for backspace when index is 0
+            //bubble up event here for backspace when at start of textbox
             OnMyKeyDown(e);
             base.OnKeyDown(e);
         }

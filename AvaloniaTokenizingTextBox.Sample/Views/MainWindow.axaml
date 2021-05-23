@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:c="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="800" Height="600"
         x:Class="AvaloniaTokenizingTextBox.Sample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaTokenizingTextBox.Sample">
@@ -17,11 +18,11 @@
 		<c:TokenizingTextBox Name="txtBox"
 			                 DockPanel.Dock="Top"
 							 TokenDelimiter=";"
-							 TokenItems="{Binding Tokens}"
-							 SelectedItem="{Binding SelectedItem}"
-						 />
+							 Items="{Binding Tokens, Mode=TwoWay}"
+							 SelectedItem="{Binding SelectedItem}" />
         <!--<ListBox Items="{Binding #txtBox.Items}" />-->
-		<ListBox Items="{Binding Tokens}" />
+		<!--<ListBox Items="{Binding #txtBox.Tokens}" />-->
+		<!--<ListBox Name="lstBox" Items="{Binding Tokens}" />-->
 		<Button Command="{Binding TestCommand}" Content="Test"/>
 		
 	</DockPanel>

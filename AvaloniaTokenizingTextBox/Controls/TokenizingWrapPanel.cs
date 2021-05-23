@@ -9,16 +9,17 @@ namespace AvaloniaTokenizingTextBox.Controls
     public partial class TokenizingWrapPanel : WrapPanel
     {
         public static readonly StyledProperty<double> HorizontalSpacingProperty =
-            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(HorizontalSpacing));
+            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(HorizontalSpacing), notifying: LayoutPropertyChanged);
+
 
         public static readonly StyledProperty<double> VerticalSpacingProperty =
-            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing));
+            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing), notifying: LayoutPropertyChanged);
 
         public static readonly StyledProperty<Thickness> PaddingProperty =
-            AvaloniaProperty.Register<TokenizingWrapPanel, Thickness>(nameof(Padding));
+            AvaloniaProperty.Register<TokenizingWrapPanel, Thickness>(nameof(Padding), notifying: LayoutPropertyChanged);
 
         public static readonly StyledProperty<StretchChild> StretchChildProperty =
-            AvaloniaProperty.Register<TokenizingWrapPanel, StretchChild>(nameof(StretchChild));
+            AvaloniaProperty.Register<TokenizingWrapPanel, StretchChild>(nameof(StretchChild), notifying: LayoutPropertyChanged);
 
         public double HorizontalSpacing
         {
@@ -215,6 +216,15 @@ namespace AvaloniaTokenizingTextBox.Controls
 
             internal double U { get; set; }
             internal double V { get; set; }
+        }
+
+        private static void LayoutPropertyChanged(IAvaloniaObject arg1, bool arg2)
+        {
+            if (arg1 is WrapPanel wp)
+            {
+                wp.InvalidateMeasure();
+                wp.InvalidateArrange();
+            }
         }
     }
 }

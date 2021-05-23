@@ -1,19 +1,15 @@
 ﻿using Avalonia.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Avalonia.Styling;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
-    public class TokenizingTextBoxItem : ContentControl, ISelectable
+    public class TokenizingTextBoxItem : ListBoxItem, IStyleable
+    //public class TokenizingTextBoxItem : ContentControl, ISelectable
     {
-        public TokenizingTextBoxItem()
-        {
-            
-        }
+        //Type IStyleable.StyleKey => typeof(ListBoxItem);
 
-        public bool IsSelected { get; set; }
+        public TokenizingTextBoxItem() { }
+
+        //public bool IsSelected { get; set; }
     }
 }
