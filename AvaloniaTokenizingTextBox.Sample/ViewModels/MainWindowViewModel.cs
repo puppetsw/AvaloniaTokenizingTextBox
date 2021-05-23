@@ -24,12 +24,6 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
         {
             Tokens = new ObservableCollection<TokenizingTextBoxItem>();
             TestCommand = ReactiveCommand.Create(Test);
-            Tokens.CollectionChanged += Tokens_CollectionChanged;
-        }
-
-        private void Tokens_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            this.RaisePropertyChanged(nameof(Tokens));
         }
 
         private void Test()

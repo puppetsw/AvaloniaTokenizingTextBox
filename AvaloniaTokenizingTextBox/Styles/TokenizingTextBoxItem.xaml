@@ -1,19 +1,37 @@
 <Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
-    <Style Selector="Controls|TokenizingTextBoxItem">
+	<Design.PreviewWith>
+		<Border Padding="0">
+			<ListBox>
+				<Controls:TokenizingTextBoxItem>
+					Text
+				</Controls:TokenizingTextBoxItem>
+				<Controls:TokenizingTextBoxItem>
+					Text1
+				</Controls:TokenizingTextBoxItem>
+				
+			</ListBox>
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="Controls|TokenizingTextBoxItem">
+		<Setter Property="Background" Value="AliceBlue"/>
+		<Setter Property="BorderBrush" Value="Blue" />
+		<Setter Property="BorderThickness" Value="0,0,0,1"/>
+		<Setter Property="Padding" Value="5,0" />		
 		<Setter Property="MinHeight" Value="25"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:TokenizingTextBoxItem">
-					<Border Name="Border"
-							BorderBrush="Blue"
-							Background="AliceBlue"
-							BorderThickness="0,0,0,1"
+					<Border Name="PART_Border"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							Background="{TemplateBinding Background}"
+							BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="2"
-                            Padding="5,0"
+                            Padding="{TemplateBinding Padding}"
 							>
-						<ContentPresenter Name="ContentPresenter"
+						<ContentPresenter Name="PART_ContentPresenter"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           VerticalAlignment="Center" />
@@ -22,5 +40,17 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+	<Style Selector="Controls|TokenizingTextBoxItem:selected /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemControlHighlightListAccentLowBrush}" />
+	</Style>
+
+	<Style Selector="Controls|TokenizingTextBoxItem:pressed /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
+	</Style>
+
+	<Style Selector="Controls|TokenizingTextBoxItem:pointerover /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemControlHighlightListLowBrush}" />
+	</Style>
 
 </Styles>

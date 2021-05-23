@@ -34,7 +34,7 @@ namespace AvaloniaTokenizingTextBox.Controls
         public ObservableCollection<TokenizingTextBoxItem> Tokens
         {
             get { return _tokens; }
-            set { SetAndRaise(TokensProperty, ref _tokens, value); }
+            private set { SetAndRaise(TokensProperty, ref _tokens, value); }
         }
 
         public string InputText
@@ -73,6 +73,7 @@ namespace AvaloniaTokenizingTextBox.Controls
                 //_textBox.KeyDown -= TextBox_KeyDown;
                 _textBox.RemoveHandler(TextInputEvent, TextBox_TextChanged);
                 _textBox.MyKeyDown -= TextBox_KeyDown;
+                _textBox.GotFocus -= TextBox_GotFocus;
                 _wrapPanel.KeyDown -= WrapPanel_KeyDown;
                 //_textBox.TextInput -= TextBox_TextChanged; //TextInput doesn't work?
             }
@@ -83,13 +84,16 @@ namespace AvaloniaTokenizingTextBox.Controls
             if (_textBox != null && _wrapPanel != null)
             {
                 Tokens.CollectionChanged += Tokens_CollectionChanged;
-                //_textBox.KeyDown += TextBox_KeyDown;
+                //_textBox.KeyDown += TextBox_KeyDown; //Backspace isn't detected if Caret position is at beginning?
                 _textBox.AddHandler(TextInputEvent, TextBox_TextChanged, RoutingStrategies.Tunnel);
                 _textBox.MyKeyDown += TextBox_KeyDown;
+                _textBox.GotFocus += TextBox_GotFocus;
                 _wrapPanel.KeyDown += WrapPanel_KeyDown;
                 //_textBox.TextInput += TextBox_TextChanged; //TextInput doesn't work?
             }
         }
+
+        private void TextBox_GotFocus(object? sender, GotFocusEventArgs e) => SelectedIndex = -1;
 
         private void WrapPanel_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -98,6 +102,7 @@ namespace AvaloniaTokenizingTextBox.Controls
 
             switch (e.Key)
             {
+                case Key.Back when itemsCount > 0:
                 case Key.Delete when itemsCount > 0:
                     if (SelectedItem == null) break;
                     int index = _tokens.IndexOf((TokenizingTextBoxItem)SelectedItem);
@@ -141,9 +146,7 @@ namespace AvaloniaTokenizingTextBox.Controls
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
         {
             int currentCursorPosition = _textBox.SelectionStart;
-            var isEmpty = string.IsNullOrWhiteSpace(_textBox.Text);
             int selectionLength = currentCursorPosition + _textBox.SelectionEnd;
-            //int itemsCount = TokenCount();
             int itemsCount = ItemsCount(Items);
             switch (e.Key)
             {
@@ -155,9 +158,7 @@ namespace AvaloniaTokenizingTextBox.Controls
                         element.Focus();
                         //_selectedToken = element;
                         SelectedIndex = itemsCount - 1;
-                                                
                     }
-
                     e.Handled = true;
                     break;
             }
