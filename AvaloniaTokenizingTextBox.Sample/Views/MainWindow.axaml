@@ -21,7 +21,7 @@
 							 TokenDelimiter=";"
 							 Items="{Binding Tokens}"
 							 SelectedItem="{Binding SelectedItem}" />
-		<ListBox Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}"/>
+		<!--<ListBox Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}"/>-->
 		
 		
 		

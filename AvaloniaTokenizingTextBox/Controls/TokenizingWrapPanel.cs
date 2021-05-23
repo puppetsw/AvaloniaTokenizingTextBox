@@ -1,16 +1,20 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using System;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
-    public partial class TokenizingWrapPanel : WrapPanel
+    /// <summary>
+    /// Class TokenizingWrapPanel
+    /// <para>Implements the <see cref="Avalonia.Controls.WrapPanel"/></para>
+    /// <para>Ported from https://github.com/iterate-ch/tokenizingtextbox </para>
+    /// </summary>
+    /// <seealso cref="Avalonia.Controls.WrapPanel"/>
+    public class TokenizingWrapPanel : WrapPanel
     {
         public static readonly StyledProperty<double> HorizontalSpacingProperty =
             AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(HorizontalSpacing), notifying: LayoutPropertyChanged);
-
 
         public static readonly StyledProperty<double> VerticalSpacingProperty =
             AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing), notifying: LayoutPropertyChanged);
@@ -26,6 +30,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             get { return GetValue(HorizontalSpacingProperty); }
             set { SetValue(HorizontalSpacingProperty, value); }
         }
+
         public double VerticalSpacing
         {
             get { return GetValue(VerticalSpacingProperty); }
@@ -37,6 +42,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             get { return GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
+
         public StretchChild StretchChild
         {
             get { return GetValue(StretchChildProperty); }
@@ -45,73 +51,68 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (Children.Count > 0)
+            UvMeasure parentMeasure = new(Orientation, finalSize.Width, finalSize.Height);
+            UvMeasure spacingMeasure = new(Orientation, HorizontalSpacing, VerticalSpacing);
+            UvMeasure paddingStart = new(Orientation, Padding.Left, Padding.Top);
+            UvMeasure paddingEnd = new(Orientation, Padding.Right, Padding.Bottom);
+            UvMeasure position = new(Orientation, Padding.Left, Padding.Top);
+
+            double currentV = 0;
+            void arrange(IControl child, bool isLast = false)
             {
-                UvMeasure parentMeasure = new UvMeasure(Orientation, finalSize.Width, finalSize.Height);
-                var spacingMeasure = new UvMeasure(Orientation, HorizontalSpacing, VerticalSpacing);
-                var paddingStart = new UvMeasure(Orientation, Padding.Left, Padding.Top);
-                var paddingEnd = new UvMeasure(Orientation, Padding.Right, Padding.Bottom);
-                var position = new UvMeasure(Orientation, Padding.Left, Padding.Top);
-
-
-                double currentV = 0;
-                void arrange(IControl child, bool isLast = false)
+                if (child is Panel nestedPanel)
                 {
-                    if (child is Panel nestedPanel)
+                    if (nestedPanel.Children.Count > 0)
                     {
-                        if (nestedPanel.Children.Count > 0)
+                        var nestedIndex = nestedPanel.Children.Count;
+                        for (var i = 0; i < nestedIndex; i++)
                         {
-                            var nestedIndex = nestedPanel.Children.Count;
-                            for (var i = 0; i < nestedIndex; i++)
-                            {
-                                arrange(nestedPanel.Children[i], isLast && (nestedIndex - i) == 1);
-                            }
+                            arrange(nestedPanel.Children[i], isLast && (nestedIndex - i) == 1);
                         }
-                        return;
                     }
-
-                    var desiredMeasure = new UvMeasure(Orientation, child.DesiredSize.Width, child.DesiredSize.Height);
-                    if (desiredMeasure.U == 0)
-                        return; // if an item is collapsed, avoid adding the spacing
-
-                    if ((desiredMeasure.U + position.U + paddingEnd.U) > parentMeasure.U)
-                    {
-                        //next row
-                        position.U = paddingStart.U;
-                        position.V += currentV + spacingMeasure.V;
-                        currentV = 0;
-                    }
-
-                    // Stretch the last item to fill the available space
-                    if (isLast && StretchChild == StretchChild.Last)
-                    {
-                        desiredMeasure.U = parentMeasure.U - position.U;
-                    }
-
-                    // place the item
-                    if (Orientation == Orientation.Horizontal)
-                    {
-                        child.Arrange(new Rect(position.U, position.V, desiredMeasure.U, desiredMeasure.V));
-                    }
-                    else
-                    {
-                        child.Arrange(new Rect(position.V, position.U, desiredMeasure.V, desiredMeasure.U));
-                    }
-
-                    // adjust the location for the next items
-                    position.U += desiredMeasure.U + spacingMeasure.U;
-                    currentV = Math.Max(desiredMeasure.V, currentV);
+                    return;
                 }
 
-                var lastIndex = Children.Count;
-                for (var i = 0; i < lastIndex; i++)
+                UvMeasure desiredMeasure = new(Orientation, child.DesiredSize.Width, child.DesiredSize.Height);
+                if (desiredMeasure.U == 0)
+                    return; // if an item is collapsed, avoid adding the spacing
+
+                if ((desiredMeasure.U + position.U + paddingEnd.U) > parentMeasure.U)
                 {
-                    arrange(Children[i], (lastIndex - i) == 1);
+                    //next row
+                    position.U = paddingStart.U;
+                    position.V += currentV + spacingMeasure.V;
+                    currentV = 0;
                 }
+
+                // Stretch the last item to fill the available space
+                if (isLast && StretchChild == StretchChild.Last)
+                {
+                    desiredMeasure.U = parentMeasure.U - position.U;
+                }
+
+                // place the item
+                if (Orientation == Orientation.Horizontal)
+                {
+                    child.Arrange(new Rect(position.U, position.V, desiredMeasure.U, desiredMeasure.V));
+                }
+                else
+                {
+                    child.Arrange(new Rect(position.V, position.U, desiredMeasure.V, desiredMeasure.U));
+                }
+
+                // adjust the location for the next items
+                position.U += desiredMeasure.U + spacingMeasure.U;
+                currentV = Math.Max(desiredMeasure.V, currentV);
+            }
+
+            var lastIndex = Children.Count;
+            for (var i = 0; i < lastIndex; i++)
+            {
+                arrange(Children[i], (lastIndex - i) == 1);
             }
 
             //return base.ArrangeOverride(finalSize);
-
             return finalSize;
         }
 
@@ -120,12 +121,12 @@ namespace AvaloniaTokenizingTextBox.Controls
             double width = size.Width - Padding.Left - Padding.Right;
             double height = size.Height - Padding.Top - Padding.Bottom;
 
-            Size availableSize = new Size(width, height);
+            Size availableSize = new(width, height);
 
-            var totalMeasure = UvMeasure.Zero;
-            var parentMeasure = new UvMeasure(Orientation, availableSize.Width, availableSize.Height);
-            var spacingMeasure = new UvMeasure(Orientation, HorizontalSpacing, VerticalSpacing);
-            var lineMeasure = UvMeasure.Zero;
+            UvMeasure totalMeasure = UvMeasure.Zero;
+            UvMeasure parentMeasure = new(Orientation, availableSize.Width, availableSize.Height);
+            UvMeasure spacingMeasure = new(Orientation, HorizontalSpacing, VerticalSpacing);
+            UvMeasure lineMeasure = UvMeasure.Zero;
 
             void measure(Avalonia.Controls.Controls elementCollection)
             {
