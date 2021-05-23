@@ -18,6 +18,7 @@
 										Items="{TemplateBinding Items}"
 										ItemsPanel="{TemplateBinding ItemsPanel}"
 										ItemTemplate="{TemplateBinding ItemTemplate}"
+										VirtualizationMode="None"
 											/>
 						<Controls:TokenTextBox Name="PART_TextBox" Grid.Row="0" Text="{TemplateBinding InputText, Mode=TwoWay}"
 											   BorderThickness="0,0,0,1"

@@ -111,8 +111,6 @@ namespace AvaloniaTokenizingTextBox.Controls
             if (token.Length > 0)
             {
                 var newToken = new TokenizingTextBoxItem() { Content = token };
-                //Tokens.Add(newToken);
-
                 var list = (ObservableCollection<TokenizingTextBoxItem>)Items;
                 list.Add(newToken);
             }
