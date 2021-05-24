@@ -21,7 +21,7 @@ Based on work from [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbo
 
 ## Licence
 
-AvaloniaTokenizingTextBox is under the [MIT license](https://github.com/puppetsw/AvaloniaTokenizingTextBox/blob/master/LICENSE).
+AvaloniaTokenizingTextBox is licensed under the [MIT license](https://github.com/puppetsw/AvaloniaTokenizingTextBox/blob/master/LICENSE).
 
 ## Contributing
 
