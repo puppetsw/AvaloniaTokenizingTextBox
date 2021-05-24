@@ -1,18 +1,15 @@
-using AvaloniaTokenizingTextBox.Controls;
 using ReactiveUI;
-using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ObservableCollection<TokenizingTextBoxItem> tokens;
+        private ObservableCollection<string> tokens;
 
-        public TokenizingTextBoxItem SelectedItem { get; set; }
-        public ObservableCollection<TokenizingTextBoxItem> Tokens
+        public object SelectedItem { get; set; }
+        public ObservableCollection<string> Tokens
         {
             get { return tokens; }
             set { this.RaiseAndSetIfChanged(ref tokens, value); }
@@ -22,14 +19,7 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 
         public MainWindowViewModel()
         {
-            Tokens = new ObservableCollection<TokenizingTextBoxItem>();
-            TestCommand = ReactiveCommand.Create(Test);
-        }
-
-        private void Test()
-        {
-
-            Debug.WriteLine(Tokens.Count);
+            Tokens = new ObservableCollection<string>();
         }
     }
 }

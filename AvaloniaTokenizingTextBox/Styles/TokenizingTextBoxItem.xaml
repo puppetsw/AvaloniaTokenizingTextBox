@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
 	<Design.PreviewWith>
-		<Border Padding="0">
+		<Border>
 			<ListBox>
 				<Controls:TokenizingTextBoxItem>
 					Text
@@ -23,12 +23,11 @@
 		<Setter Property="MinHeight" Value="25"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Controls:TokenizingTextBoxItem">
+                <ControlTemplate>
 					<Border Name="PART_Border"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							Background="{TemplateBinding Background}"
 							BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="2"
                             Padding="{TemplateBinding Padding}"
 							>
 						<ContentPresenter Name="PART_ContentPresenter"
@@ -41,6 +40,10 @@
         </Setter>
     </Style>
 
+	<Style Selector="Controls|TokenizingTextBoxItem /template/ Border#PART_Border">
+		<Setter Property="CornerRadius" Value="2"/>
+	</Style>
+	
 	<Style Selector="Controls|TokenizingTextBoxItem:selected /template/ Border#PART_Border">
 		<Setter Property="Background" Value="{DynamicResource SystemControlHighlightListAccentLowBrush}" />
 	</Style>

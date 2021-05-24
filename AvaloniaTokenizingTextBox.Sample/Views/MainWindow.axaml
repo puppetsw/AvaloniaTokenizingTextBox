@@ -15,17 +15,21 @@
     </Design.DataContext>
 
 	<DockPanel>
-		
-		<c:TokenizingTextBox Name="txtBox"
-			                 DockPanel.Dock="Top"
+		<c:TokenizingTextBox DockPanel.Dock="Top"
 							 TokenDelimiter=";"
 							 Items="{Binding Tokens}"
 							 SelectedItem="{Binding SelectedItem}" />
-		<!--<ListBox Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}"/>-->
-		
-		
-		
-		<Button Command="{Binding TestCommand}" Content="Debug" HorizontalAlignment="Center"/>
-		
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+				<TextBlock Text="Items List" />
+				<ListBox Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}"/>
+			</StackPanel>
+		</Grid>
+
 	</DockPanel>
 </Window>
