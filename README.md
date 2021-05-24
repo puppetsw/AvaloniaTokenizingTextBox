@@ -6,7 +6,7 @@ A Tokenizing TextBox for [Avalonia](https://github.com/AvaloniaUI/Avalonia), sim
 
 Ported from [WindowsCommunityToolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit)
 
-Based on work from [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
+Based on work by [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
 
 ## Usage
 
