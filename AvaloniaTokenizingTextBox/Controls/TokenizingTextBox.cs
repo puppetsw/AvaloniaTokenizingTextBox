@@ -106,6 +106,18 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         #endregion Protected Methods
 
+        #region Public Methods
+
+        public void DeleteSelected()
+        {
+            if (SelectedItem == null) return;
+            int index = IndexOf(Items, SelectedItem);
+            (Items as IList)?.RemoveAt(index);
+            _textBox?.Focus();
+        }
+
+        #endregion Public Methods
+
         #region Private Methods
 
         private void AddToken(string token)
@@ -113,6 +125,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             if (token.Length > 0)
                 (Items as IList)?.Add(token);
         }
+
 
         private void TextBox_GotFocus(object? sender, GotFocusEventArgs e) => SelectedIndex = -1;
 

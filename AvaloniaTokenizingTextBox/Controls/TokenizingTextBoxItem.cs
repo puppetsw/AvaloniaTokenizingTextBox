@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
+using Avalonia.Controls.Primitives;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
@@ -15,6 +16,9 @@ namespace AvaloniaTokenizingTextBox.Controls
     [PseudoClasses(":pressed", ":selected")]
     public class TokenizingTextBoxItem : ContentControl, ISelectable
     {
+        private const string PART_Button = "PART_Button";
+        private Button? _button;
+
         /// <summary>
         /// Defines the <see cref="IsSelected"/> property.
         /// </summary>
@@ -36,5 +40,24 @@ namespace AvaloniaTokenizingTextBox.Controls
             PressedMixin.Attach<TokenizingTextBoxItem>();
             FocusableProperty.OverrideDefaultValue<TokenizingTextBoxItem>(true);
         }
+
+        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+        {
+            base.OnApplyTemplate(e);
+
+            if (_button != null)
+            {
+                _button.Click -= Button_Click;
+            }
+
+            _button = (Button)e.NameScope.Get<Control>(PART_Button);
+
+            if (_button != null)
+            {
+                _button.Click += Button_Click;
+            }
+        }
+
+        private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => IsSelected = true;
     }
 }
