@@ -2,9 +2,7 @@ AvaloniaTokenizingTextBox
 ============
 ![TextBoxExample](https://user-images.githubusercontent.com/79826944/119290212-42ac5b80-bc8b-11eb-8518-a5a545c68705.gif)
 
-A Tokenizing TextBox for [Avalonia](https://github.com/AvaloniaUI/Avalonia), similar to the one created by [Marcus Perryman](https://github.com/marcpems). 
-
-Ported from [WindowsCommunityToolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit)
+A Tokenizing TextBox for [Avalonia](https://github.com/AvaloniaUI/Avalonia), similar to the one created by [Marcus Perryman](https://github.com/marcpems) for [WindowsCommunityToolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit)
 
 Based on work by [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
 
