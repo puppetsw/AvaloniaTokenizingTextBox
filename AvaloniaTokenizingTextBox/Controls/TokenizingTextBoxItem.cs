@@ -7,9 +7,9 @@ using Avalonia.Controls.Primitives;
 namespace AvaloniaTokenizingTextBox.Controls
 {
     /// <summary>
-    /// Class TokenizingTextBoxItem.
-    /// Implements the <see cref="Avalonia.Controls.ContentControl" />
-    /// Implements the <see cref="Avalonia.Controls.ISelectable" />
+    /// A control that manages as the item logic for the <see cref="TokenizingTextBox"/> control.
+    /// <para>Implements <see cref="Avalonia.Controls.ContentControl" />,
+    /// Implements <see cref="Avalonia.Controls.ISelectable" /></para>
     /// </summary>
     /// <seealso cref="Avalonia.Controls.ContentControl" />
     /// <seealso cref="Avalonia.Controls.ISelectable" />

@@ -1,16 +1,20 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Styling;
-using System;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
     /// <summary>
-    /// Class TokenTextBox.
-    /// Implements the <see cref="Avalonia.Controls.TextBox" />
-    /// Implements the <see cref="Avalonia.Styling.IStyleable" />
-    /// <para></para>
+    /// <inheritdoc/>
+    /// <para>Implements <see cref="Avalonia.Controls.TextBox" />,
+    /// Implements <see cref="Avalonia.Styling.IStyleable" /></para>
     /// </summary>
+    /// <remarks>
+    /// As the KeyDown event doesn't seem to fire if the caret position
+    /// of the TextBox is at the start of the control. Created inherited
+    /// control that fires that extra event for us.
+    /// </remarks>
     /// <seealso cref="Avalonia.Controls.TextBox" />
     /// <seealso cref="Avalonia.Styling.IStyleable" />
     public class TokenTextBox : TextBox, IStyleable

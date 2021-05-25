@@ -1,7 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
-using System;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
@@ -16,25 +16,18 @@ namespace AvaloniaTokenizingTextBox.Controls
         public static readonly StyledProperty<double> HorizontalSpacingProperty =
             AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(HorizontalSpacing), notifying: LayoutPropertyChanged);
 
-        public static readonly StyledProperty<double> VerticalSpacingProperty =
-            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing), notifying: LayoutPropertyChanged);
-
         public static readonly StyledProperty<Thickness> PaddingProperty =
             AvaloniaProperty.Register<TokenizingWrapPanel, Thickness>(nameof(Padding), notifying: LayoutPropertyChanged);
 
         public static readonly StyledProperty<StretchChild> StretchChildProperty =
             AvaloniaProperty.Register<TokenizingWrapPanel, StretchChild>(nameof(StretchChild), notifying: LayoutPropertyChanged);
 
+        public static readonly StyledProperty<double> VerticalSpacingProperty =
+                            AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing), notifying: LayoutPropertyChanged);
         public double HorizontalSpacing
         {
             get { return GetValue(HorizontalSpacingProperty); }
             set { SetValue(HorizontalSpacingProperty, value); }
-        }
-
-        public double VerticalSpacing
-        {
-            get { return GetValue(VerticalSpacingProperty); }
-            set { SetValue(VerticalSpacingProperty, value); }
         }
 
         public Thickness Padding
@@ -47,6 +40,35 @@ namespace AvaloniaTokenizingTextBox.Controls
         {
             get { return GetValue(StretchChildProperty); }
             set { SetValue(StretchChildProperty, value); }
+        }
+
+        public double VerticalSpacing
+        {
+            get { return GetValue(VerticalSpacingProperty); }
+            set { SetValue(VerticalSpacingProperty, value); }
+        }
+        private struct UvMeasure
+        {
+            internal static readonly UvMeasure Zero = default;
+
+            internal double U { get; set; }
+
+            internal double V { get; set; }
+
+            public UvMeasure(Orientation orientation, double width, double height) : this()
+            {
+                if (orientation == Orientation.Horizontal)
+                {
+                    U = width;
+                    V = height;
+                }
+
+                if (orientation == Orientation.Vertical)
+                {
+                    U = height;
+                    V = width;
+                }
+            }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -194,29 +216,6 @@ namespace AvaloniaTokenizingTextBox.Controls
             totalMeasure.U = Math.Ceiling(totalMeasure.U);
 
             return Orientation == Orientation.Horizontal ? new Size(totalMeasure.U, totalMeasure.V) : new Size(totalMeasure.V, totalMeasure.U);
-        }
-
-        private struct UvMeasure
-        {
-            internal static readonly UvMeasure Zero = default;
-
-            public UvMeasure(Orientation orientation, double width, double height) : this()
-            {
-                if (orientation == Orientation.Horizontal)
-                {
-                    U = width;
-                    V = height;
-                }
-
-                if (orientation == Orientation.Vertical)
-                {
-                    U = height;
-                    V = width;
-                }
-            }
-
-            internal double U { get; set; }
-            internal double V { get; set; }
         }
 
         private static void LayoutPropertyChanged(IAvaloniaObject arg1, bool arg2)

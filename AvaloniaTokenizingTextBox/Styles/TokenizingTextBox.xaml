@@ -1,7 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
-	
+
 	<Design.PreviewWith>
 		<DockPanel Height="100">
 			<c:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
@@ -11,69 +11,62 @@
 				<c:TokenizingTextBoxItem>
 					Text1
 				</c:TokenizingTextBoxItem>
-				
 			</c:TokenizingTextBox>
-
 			<TextBox DockPanel.Dock="Bottom" Margin="10" Height="25">Test</TextBox>
 		</DockPanel>
 	</Design.PreviewWith>
 
 	<Style Selector="TextBox.Token">
-		<Setter Property="BorderBrush" Value="Transparent"/>
-		<Setter Property="Watermark" Value="Add Token"/>
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="Watermark" Value="Add Token" />
 		<Setter Property="Padding" Value="0" />
 		<Setter Property="Margin" Value="0" />
-		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="MinHeight" Value="25" />
-
 	</Style>
 
 	<Style Selector="TextBox.Token:focus /template/ Border#PART_BorderElement">
-		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}"/>
-		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+		<Setter Property="BorderBrush" Value="Transparent" />
 		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
 	</Style>
 
 	<Style Selector="TextBox.Token:pointerover /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="Transparent" />
 		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
 	</Style>
 
 	<!--<Style Selector="TextBox.Token /template/ TextPresenter">
-		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Margin" Value="0" />
 	</Style>-->
 
 	<Style Selector="c|TokenizingTextBox">
 		<Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
 		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
-        <Setter Property="Focusable" Value="False" />
+		<Setter Property="Focusable" Value="False" />
 		<Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-					<Border Name="PART_OuterBorder" 
+			<Setter.Value>
+				<ControlTemplate>
+					<Border Name="PART_OuterBorder"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
-							CornerRadius="4"
-							>
+							CornerRadius="4">
 						<StackPanel VerticalAlignment="Center">
-						<c:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
-											   StretchChild="Last">
-							<ItemsPresenter Name="PART_ItemsPresenter"
-											Items="{TemplateBinding Items}"
-											ItemsPanel="{TemplateBinding ItemsPanel}"
-											ItemTemplate="{TemplateBinding ItemTemplate}"
-											>
-							</ItemsPresenter>
-							<c:TokenTextBox Classes="Token" Name="PART_TextBox" 
-											Text="{TemplateBinding InputText, Mode=TwoWay}"
-											/>
-						</c:TokenizingWrapPanel>
+							<c:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
+												   StretchChild="Last">
+								<ItemsPresenter Name="PART_ItemsPresenter"
+												Items="{TemplateBinding Items}"
+												ItemsPanel="{TemplateBinding ItemsPanel}"
+												ItemTemplate="{TemplateBinding ItemTemplate}" />
+								<c:TokenTextBox Classes="Token" Name="PART_TextBox"
+												Text="{TemplateBinding InputText, Mode=TwoWay}" />
+							</c:TokenizingWrapPanel>
 						</StackPanel>
 					</Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </Styles>

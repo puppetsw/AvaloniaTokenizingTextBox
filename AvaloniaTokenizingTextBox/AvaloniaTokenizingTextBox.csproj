@@ -5,10 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\Generic.xaml" />
     <None Remove="Styles\TokenizingTextBox.xaml" />
     <None Remove="Styles\TokenizingTextBoxItem.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Include="Styles\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
     <AvaloniaResource Include="Styles\TokenizingTextBoxItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>

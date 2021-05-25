@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using System.Collections;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Generators;
 using Avalonia.Controls.Primitives;
@@ -6,20 +8,16 @@ using Avalonia.Controls.Templates;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using System;
-using System.Collections;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
     /// <summary>
-    /// Class TokenizingTextBox.
+    /// A text input control that displays tokens.
     /// <para>Implements <see cref="Avalonia.Controls.ListBox" /></para>
     /// </summary>
     /// <seealso cref="Avalonia.Controls.ListBox" />
     public class TokenizingTextBox : ListBox
     {
-        #region Private Fields
-
         private const string PART_TextBox = "PART_TextBox";
         private const string PART_WrapPanel = "PART_WrapPanel";
         private TokenTextBox? _textBox;
@@ -30,10 +28,6 @@ namespace AvaloniaTokenizingTextBox.Controls
         /// </summary>
         private static readonly FuncTemplate<IPanel> DefaultPanel =
             new(() => new StackPanel() { Orientation = Orientation.Horizontal });
-
-        #endregion Private Fields
-
-        #region Public Properties
 
         /// <summary>
         /// Defines the <see cref="InputText"/> property.
@@ -47,30 +41,28 @@ namespace AvaloniaTokenizingTextBox.Controls
         public static readonly StyledProperty<string> TokenDelimiterProperty =
         AvaloniaProperty.Register<TokenizingTextBox, string>(nameof(TokenDelimiter));
 
+        /// <summary>
+        /// Gets or sets the input text.
+        /// </summary>
         public string InputText
         {
             get => GetValue(InputTextProperty);
             set => SetValue(InputTextProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the token delimiter.
+        /// </summary>
         public string TokenDelimiter
         {
             get => GetValue(TokenDelimiterProperty);
             set => SetValue(TokenDelimiterProperty, value);
         }
 
-        #endregion Public Properties
-
-        #region Constructors
-
         static TokenizingTextBox()
         {
             ItemsPanelProperty.OverrideDefaultValue<TokenizingTextBox>(DefaultPanel);
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
         {
@@ -104,28 +96,20 @@ namespace AvaloniaTokenizingTextBox.Controls
             }
         }
 
-        #endregion Protected Methods
-
-        #region Public Methods
-
         public void DeleteSelected()
         {
-            if (SelectedItem == null) return;
+            if (SelectedItem == null)
+                return;
             int index = IndexOf(Items, SelectedItem);
             (Items as IList)?.RemoveAt(index);
             _textBox?.Focus();
         }
-
-        #endregion Public Methods
-
-        #region Private Methods
 
         private void AddToken(string token)
         {
             if (token.Length > 0)
                 (Items as IList)?.Add(token);
         }
-
 
         private void TextBox_GotFocus(object? sender, GotFocusEventArgs e) => SelectedIndex = -1;
 
@@ -183,14 +167,14 @@ namespace AvaloniaTokenizingTextBox.Controls
                 case Key.Back when ItemCount > 0:
                 case Key.Delete when ItemCount > 0:
                     if (SelectedItem == null)
+                    {
                         break;
+                    }
                     int index = IndexOf(Items, SelectedItem);
                     (Items as IList)?.RemoveAt(index);
                     _textBox?.Focus();
                     break;
             }
         }
-
-        #endregion Private Methods
     }
 }
