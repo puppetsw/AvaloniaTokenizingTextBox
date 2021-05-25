@@ -26,7 +26,7 @@ namespace AvaloniaTokenizingTextBox.Controls
         /// <summary>
         /// The default value for the <see cref="ItemsControl.ItemsPanel"/> property.
         /// </summary>
-        private static readonly FuncTemplate<IPanel> DefaultPanel =
+        private static readonly FuncTemplate<IPanel> s_defaultPanel =
             new(() => new StackPanel() { Orientation = Orientation.Horizontal });
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         static TokenizingTextBox()
         {
-            ItemsPanelProperty.OverrideDefaultValue<TokenizingTextBox>(DefaultPanel);
+            ItemsPanelProperty.OverrideDefaultValue<TokenizingTextBox>(s_defaultPanel);
         }
 
         protected override IItemContainerGenerator CreateItemContainerGenerator()
@@ -96,6 +96,9 @@ namespace AvaloniaTokenizingTextBox.Controls
             }
         }
 
+        /// <summary>
+        /// Deletes the currently selected token.
+        /// </summary>
         public void DeleteSelected()
         {
             if (SelectedItem == null)
