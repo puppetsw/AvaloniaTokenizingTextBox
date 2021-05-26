@@ -179,6 +179,9 @@ namespace AvaloniaTokenizingTextBox.Controls
                 case Key.End when ItemCount > 0:
                     _textBox?.Focus();
                     break;
+                case Key.Right when ItemCount -1 == SelectedIndex:
+                    _textBox?.Focus();
+                    break;
             }
         }
     }
