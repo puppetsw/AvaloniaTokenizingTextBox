@@ -122,8 +122,8 @@ namespace AvaloniaTokenizingTextBox.Controls
             int selectionLength = currentCursorPosition + _textBox.SelectionEnd;
             switch (e.Key)
             {
+                case Key.Left when currentCursorPosition == 0 && selectionLength == 0 && ItemCount > 0:
                 case Key.Back when currentCursorPosition == 0 && selectionLength == 0 && ItemCount > 0:
-                    e.Handled = true;
                     var container = ItemContainerGenerator.ContainerFromIndex(ItemCount - 1);
                     if (container is TokenizingTextBoxItem element)
                     {
@@ -170,11 +170,13 @@ namespace AvaloniaTokenizingTextBox.Controls
                 case Key.Back when ItemCount > 0:
                 case Key.Delete when ItemCount > 0:
                     if (SelectedItem == null)
-                    {
                         break;
-                    }
+
                     int index = IndexOf(Items, SelectedItem);
                     (Items as IList)?.RemoveAt(index);
+                    _textBox?.Focus();
+                    break;
+                case Key.End when ItemCount > 0:
                     _textBox?.Focus();
                     break;
             }
