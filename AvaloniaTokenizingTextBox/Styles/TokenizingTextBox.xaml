@@ -1,17 +1,17 @@
 <Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
+             xmlns:controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
 
 	<Design.PreviewWith>
 		<DockPanel Height="100">
-			<Controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
-				<Controls:TokenizingTextBoxItem>
+			<controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
+				<controls:TokenizingTextBoxItem>
 					Text
-				</Controls:TokenizingTextBoxItem>
-				<Controls:TokenizingTextBoxItem>
+				</controls:TokenizingTextBoxItem>
+				<controls:TokenizingTextBoxItem>
 					Text1
-				</Controls:TokenizingTextBoxItem>
-			</Controls:TokenizingTextBox>
+				</controls:TokenizingTextBoxItem>
+			</controls:TokenizingTextBox>
 			<TextBox DockPanel.Dock="Bottom" Margin="10" Height="25">Test</TextBox>
 		</DockPanel>
 	</Design.PreviewWith>
@@ -41,7 +41,7 @@
 		<Setter Property="Margin" Value="0" />
 	</Style>-->
 
-	<Style Selector="Controls|TokenizingTextBox">
+	<Style Selector="controls|TokenizingTextBox">
 
 		<Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
 		<Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
@@ -58,18 +58,18 @@
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}">
 						<StackPanel VerticalAlignment="Center">
-							<Controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
+							<controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
 												   StretchChild="Last">
 								<ItemsPresenter Name="PART_ItemsPresenter"
 												Items="{TemplateBinding Items}"
 												ItemsPanel="{TemplateBinding ItemsPanel}"
 												ItemTemplate="{TemplateBinding ItemTemplate}" />
-								<Controls:TokenTextBox Classes="Token" Name="PART_TextBox"
+								<controls:TokenTextBox Classes="Token" Name="PART_TextBox"
 												Text="{TemplateBinding InputText, Mode=TwoWay}"
 												MinHeight="{TemplateBinding MinHeight}"
 												Padding="{TemplateBinding Padding}"
 												/>
-							</Controls:TokenizingWrapPanel>
+							</controls:TokenizingWrapPanel>
 						</StackPanel>
 					</Border>
 				</ControlTemplate>
@@ -77,11 +77,11 @@
 		</Setter>
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBox /template/ Border#PART_OuterBorder">
+	<Style Selector="controls|TokenizingTextBox /template/ Border#PART_OuterBorder">
 		<Setter Property="CornerRadius" Value="4" />
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBox:focus-within /template/ Border#PART_OuterBorder">
+	<Style Selector="controls|TokenizingTextBox:focus-within /template/ Border#PART_OuterBorder">
 		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}"/>
 		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />

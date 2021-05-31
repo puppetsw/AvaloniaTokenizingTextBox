@@ -27,7 +27,7 @@ namespace AvaloniaTokenizingTextBox.Controls
         /// The default value for the <see cref="ItemsControl.ItemsPanel"/> property.
         /// </summary>
         private static readonly FuncTemplate<IPanel> s_defaultPanel =
-            new(() => new StackPanel() { Orientation = Orientation.Horizontal });
+            new(() => new StackPanel { Orientation = Orientation.Horizontal });
 
         /// <summary>
         /// Defines the <see cref="InputText"/> property.
@@ -137,30 +137,29 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         private void TextBox_TextChanged(object? sender, TextInputEventArgs e)
         {
-            string text = _textBox.Text;
+            string? text = _textBox?.Text;
 
-            if (!string.IsNullOrEmpty(TokenDelimiter) && e.Text.Contains(TokenDelimiter)) //t.Contains(TokenDelimiter))
+            if (string.IsNullOrEmpty(TokenDelimiter) || !e.Text.Contains(TokenDelimiter)) return;
+            
+            string t = text + e.Text;
+
+            bool lastDelimited = t[^1] == TokenDelimiter[0];
+
+            string[] tokens = t.Split(new[] { TokenDelimiter }, StringSplitOptions.RemoveEmptyEntries);
+            int numberToProcess = lastDelimited ? tokens.Length : tokens.Length - 1;
+            for (var position = 0; position < numberToProcess; position++)
+                AddToken(tokens[position]);
+
+            if (lastDelimited)
             {
-                string t = text + e.Text;
-
-                bool lastDelimited = t[t.Length - 1] == TokenDelimiter[0];
-
-                string[] tokens = t.Split(new[] { TokenDelimiter }, StringSplitOptions.RemoveEmptyEntries);
-                int numberToProcess = lastDelimited ? tokens.Length : tokens.Length - 1;
-                for (int position = 0; position < numberToProcess; position++)
-                    AddToken(tokens[position]);
-
-                if (lastDelimited)
-                {
-                    _textBox.Text = string.Empty;
-                }
-                else
-                {
-                    _textBox.Text = tokens[tokens.Length - 1];
-                    _textBox.CaretIndex = _textBox.Text.Length;
-                }
-                e.Handled = true; //handle the event so the delimiter doesn't display
+                _textBox.Text = string.Empty;
             }
+            else
+            {
+                _textBox.Text = tokens[^1];
+                _textBox.CaretIndex = _textBox.Text.Length;
+            }
+            e.Handled = true; //handle the event so the delimiter doesn't display
         }
 
         private void WrapPanel_KeyDown(object? sender, KeyEventArgs e)
