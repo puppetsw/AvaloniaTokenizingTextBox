@@ -18,6 +18,7 @@
 		<StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/BaseDark.xaml" />-->
 
 		<StyleInclude Source="avares://AvaloniaTokenizingTextBox/Styles/Generic.xaml"/>
+		<StyleInclude Source="avares://AvaloniaTokenizingTextBox/Styles/TokenizingControl.xaml"/>
 		
     </Application.Styles>
 </Application>

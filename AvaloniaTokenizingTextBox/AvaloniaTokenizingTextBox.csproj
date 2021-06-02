@@ -19,6 +19,9 @@
     <AvaloniaResource Include="Styles\TokenizingTextBox.xaml">
       <Generator></Generator>
     </AvaloniaResource>
+    <None Remove="Styles\TokensControl.xaml" />
+    <None Remove="Styles\TokenizingControl.xaml" />
+    <AvaloniaResource Include="Styles\TokenizingControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.5" />
