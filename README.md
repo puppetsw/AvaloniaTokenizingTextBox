@@ -1,6 +1,6 @@
 AvaloniaTokenizingTextBox
 ============
-![TextBoxExample1](https://user-images.githubusercontent.com/79826944/119514941-9797c100-bdb4-11eb-8314-d2e26861a8a6.gif)
+![Example](https://user-images.githubusercontent.com/79826944/120430465-37a5a980-c3b6-11eb-9501-3ea1022c64f4.gif)
 
 A Tokenizing TextBox for [Avalonia](https://github.com/AvaloniaUI/Avalonia), similar to the one created by [Marcus Perryman](https://github.com/marcpems) for [WindowsCommunityToolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit)
 
