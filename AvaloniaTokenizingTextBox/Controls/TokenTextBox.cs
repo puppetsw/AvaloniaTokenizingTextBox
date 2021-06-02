@@ -6,7 +6,7 @@ using Avalonia.Styling;
 namespace AvaloniaTokenizingTextBox.Controls
 {
     /// <summary>
-    /// <inheritdoc/>
+    /// <inheritdoc cref="Avalonia.Controls.TextBox" />
     /// <para>Implements <see cref="Avalonia.Controls.TextBox" />,
     /// Implements <see cref="Avalonia.Styling.IStyleable" /></para>
     /// </summary>
@@ -17,7 +17,7 @@ namespace AvaloniaTokenizingTextBox.Controls
     /// </remarks>
     /// <seealso cref="Avalonia.Controls.TextBox" />
     /// <seealso cref="Avalonia.Styling.IStyleable" />
-    public class TokenTextBox : TextBox, IStyleable
+    public sealed class TokenTextBox : TextBox, IStyleable
     {
         Type IStyleable.StyleKey => typeof(TextBox);
 
@@ -31,6 +31,6 @@ namespace AvaloniaTokenizingTextBox.Controls
             base.OnKeyDown(e);
         }
 
-        protected virtual void OnMyKeyDown(KeyEventArgs e) => MyKeyDown?.Invoke(this, e);
+        private void OnMyKeyDown(KeyEventArgs e) => MyKeyDown?.Invoke(this, e);
     }
 }

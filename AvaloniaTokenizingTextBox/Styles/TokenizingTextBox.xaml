@@ -1,89 +1,82 @@
 <Styles xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
 
-	<Design.PreviewWith>
-		<DockPanel Height="100">
-			<controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
-				<controls:TokenizingTextBoxItem>
-					Text
-				</controls:TokenizingTextBoxItem>
-				<controls:TokenizingTextBoxItem>
-					Text1
-				</controls:TokenizingTextBoxItem>
-			</controls:TokenizingTextBox>
-			<TextBox DockPanel.Dock="Bottom" Margin="10" Height="25">Test</TextBox>
-		</DockPanel>
-	</Design.PreviewWith>
+    <Design.PreviewWith>
+        <DockPanel Height="100">
+            <controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
+                <controls:TokenizingTextBoxItem>
+                    Text
+                </controls:TokenizingTextBoxItem>
+                <controls:TokenizingTextBoxItem>
+                    Text1
+                </controls:TokenizingTextBoxItem>
+            </controls:TokenizingTextBox>
+            <TextBox DockPanel.Dock="Bottom" Margin="10" Height="25">Test</TextBox>
+        </DockPanel>
+    </Design.PreviewWith>
 
-	<Style Selector="TextBox.Token">
-		<Setter Property="BorderBrush" Value="Transparent" />
-		<Setter Property="Watermark" Value="Add Token" />
-		<Setter Property="Padding" Value="0" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="VerticalAlignment" Value="Center" />
-	</Style>
+    <Style Selector="controls|TokenizingTextBox">
+        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+        <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Name="PART_OuterBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <StackPanel VerticalAlignment="Center">
+                            <controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
+                                                          StretchChild="Last">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                Items="{TemplateBinding Items}"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                ItemTemplate="{TemplateBinding ItemTemplate}" />
+                                <controls:TokenTextBox Name="PART_TextBox" Classes="Input"
+                                                       Text="{TemplateBinding InputText, Mode=TwoWay}"
+                                                       MinHeight="{TemplateBinding MinHeight}"
+                                                       Padding="{TemplateBinding Padding}" />
+                            </controls:TokenizingWrapPanel>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<Style Selector="TextBox.Token:focus /template/ Border#PART_BorderElement">
-		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
-		<Setter Property="BorderBrush" Value="Transparent" />
-		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
-	</Style>
+    <Style Selector="controls|TokenizingTextBox /template/ Border#PART_OuterBorder">
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
 
-	<Style Selector="TextBox.Token:pointerover /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="Transparent" />
-		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
-	</Style>
+    <Style Selector="controls|TokenizingTextBox:focus-within /template/ Border#PART_OuterBorder">
+        <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+    </Style>
 
-	<!--<Style Selector="TextBox.Token /template/ TextPresenter">
-		<Setter Property="VerticalAlignment" Value="Center" />
-		<Setter Property="Margin" Value="0" />
-	</Style>-->
+    <!--TextBox Styles-->
+    <Style Selector="TextBox.Input">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
 
-	<Style Selector="controls|TokenizingTextBox">
+    <Style Selector="TextBox.Input:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+    </Style>
 
-		<Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
-		<Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
-		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
-		<Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-		<Setter Property="MinHeight" Value="25" />
-		<Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-		<Setter Property="Focusable" Value="False" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate>
-					<Border Name="PART_OuterBorder"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}">
-						<StackPanel VerticalAlignment="Center">
-							<controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
-												   StretchChild="Last">
-								<ItemsPresenter Name="PART_ItemsPresenter"
-												Items="{TemplateBinding Items}"
-												ItemsPanel="{TemplateBinding ItemsPanel}"
-												ItemTemplate="{TemplateBinding ItemTemplate}" />
-								<controls:TokenTextBox Classes="Token" Name="PART_TextBox"
-												Text="{TemplateBinding InputText, Mode=TwoWay}"
-												MinHeight="{TemplateBinding MinHeight}"
-												Padding="{TemplateBinding Padding}"
-												/>
-							</controls:TokenizingWrapPanel>
-						</StackPanel>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-	<Style Selector="controls|TokenizingTextBox /template/ Border#PART_OuterBorder">
-		<Setter Property="CornerRadius" Value="4" />
-	</Style>
-
-	<Style Selector="controls|TokenizingTextBox:focus-within /template/ Border#PART_OuterBorder">
-		<Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}"/>
-		<Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
-	</Style>
+    <Style Selector="TextBox.Input:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
+    </Style>
 </Styles>

@@ -6,20 +6,18 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ObservableCollection<string> tokens;
+        private ObservableCollection<string> _tokens = new();
 
-        public object SelectedItem { get; set; }
+        public object? SelectedItem { get; set; }
+        
         public ObservableCollection<string> Tokens
         {
-            get { return tokens; }
-            set { this.RaiseAndSetIfChanged(ref tokens, value); }
+            get { return _tokens; }
+            set { this.RaiseAndSetIfChanged(ref _tokens, value); }
         }
-
-        public ICommand TestCommand { get; }
 
         public MainWindowViewModel()
         {
-            Tokens = new ObservableCollection<string>();
         }
     }
 }

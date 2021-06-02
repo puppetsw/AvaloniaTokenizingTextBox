@@ -3,34 +3,25 @@
         xmlns:vm="using:AvaloniaTokenizingTextBox.Sample.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:c="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox"
+        xmlns:c="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		Width="800" Height="600"
+        Width="800" Height="600"
         x:Class="AvaloniaTokenizingTextBox.Sample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaTokenizingTextBox.Sample">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-	<DockPanel Margin="10">
-		<c:TokenizingTextBox DockPanel.Dock="Top"
-							 TokenDelimiter=";"
-							 Items="{Binding Tokens}"
-							 SelectedItem="{Binding SelectedItem}" 
-							 />
-
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="0" Margin="0,10">
-				<TextBlock Text="Bound List" />
-				<ListBox Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}"/>
-			</StackPanel>
-		</Grid>
-
-	</DockPanel>
+    <DockPanel Margin="10">
+        <Grid ShowGridLines="false" RowDefinitions="30,*,*" ColumnDefinitions="30,*,*">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="To" DockPanel.Dock="Left" VerticalAlignment="Center" />
+            <c:TokenizingTextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                 TokenDelimiter=";"
+                                 Items="{Binding Tokens}"
+                                 SelectedItem="{Binding SelectedItem}" />
+            <ListBox Grid.Row="1" Grid.Column="1" Name="lstBox" Items="{Binding Tokens}" SelectedItem="{Binding SelectedItem}" />
+        </Grid>
+    </DockPanel>
 </Window>
