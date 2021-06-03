@@ -13,7 +13,7 @@ Based on work by [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
 
 ```xml
 <DockPanel>
-  <c:TokenizingTextBox DockPanel.Dock="Top"
+  <c:TokenizingTextBox
     TokenDelimiter=";"
     Items="{Binding Tokens}"
     SelectedItem="{Binding SelectedItem}" />
