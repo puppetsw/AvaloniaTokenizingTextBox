@@ -1,6 +1,5 @@
 using ReactiveUI;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace AvaloniaTokenizingTextBox.Sample.ViewModels
 {
@@ -8,12 +7,14 @@ namespace AvaloniaTokenizingTextBox.Sample.ViewModels
     {
         private ObservableCollection<string> _tokens = new();
 
+        public ObservableCollection<string> SelectableTokens { get; } = new() { "anothertest@gmail.com", "anothertest2@gmail.com", "test@gmail.com" };
+
         public object? SelectedItem { get; set; }
         
         public ObservableCollection<string> Tokens
         {
-            get { return _tokens; }
-            set { this.RaiseAndSetIfChanged(ref _tokens, value); }
+            get => _tokens;
+            set => this.RaiseAndSetIfChanged(ref _tokens, value);
         }
 
         public MainWindowViewModel()

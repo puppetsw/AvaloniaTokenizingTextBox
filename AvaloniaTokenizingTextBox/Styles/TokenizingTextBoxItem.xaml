@@ -1,24 +1,24 @@
 <Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
+             xmlns:controls="clr-namespace:AvaloniaTokenizingTextBox.Controls;assembly=AvaloniaTokenizingTextBox">
 	<Design.PreviewWith>
-		<Controls:TokenizingTextBox Width="500">
-			<Controls:TokenizingTextBoxItem>
+		<controls:TokenizingTextBox Width="500">
+			<controls:TokenizingTextBoxItem>
 				Text
-			</Controls:TokenizingTextBoxItem>
-			<Controls:TokenizingTextBoxItem>
+			</controls:TokenizingTextBoxItem>
+			<controls:TokenizingTextBoxItem>
 				Text1
-			</Controls:TokenizingTextBoxItem>
-		</Controls:TokenizingTextBox>
+			</controls:TokenizingTextBoxItem>
+		</controls:TokenizingTextBox>
 	</Design.PreviewWith>
 
 	<Style Selector="Button.textBoxClearButton:pressed /template/ Border#PART_ButtonLayoutBorder">
 		<Setter Property="Background" Value="Transparent" />
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBoxItem">
-		<Setter Property="Background" Value="{DynamicResource SystemColorHighlightColor}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource SystemColorHighlightColor}" />
+	<Style Selector="controls|TokenizingTextBoxItem">
+		<Setter Property="Background" Value="{DynamicResource SystemAccentColorLight1}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColorLight1}" />
 		<Setter Property="MinHeight" Value="25" />
 		<Setter Property="Padding" Value="5,0,0,0" />
 		<Setter Property="VerticalContentAlignment" Value="Center" />
@@ -39,7 +39,9 @@
 											VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 							<Button Name="PART_Button" 
 									Classes="textBoxClearButton" 
-									Command="{Binding $parent[ListBox].DeleteSelected}" />
+									Command="{Binding $parent[ListBox].DeleteSelected}" 
+									Cursor="Hand"
+									/>
 						</StackPanel>
 					</Border>
 				</ControlTemplate>
@@ -47,19 +49,19 @@
 		</Setter>
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBoxItem /template/ Border#PART_Border">
+	<Style Selector="controls|TokenizingTextBoxItem /template/ Border#PART_Border">
 		<Setter Property="CornerRadius" Value="10" />
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBoxItem:selected /template/ Border#PART_Border">
-		<Setter Property="Background" Value="{DynamicResource SystemColorHotlightColor}" />
+	<Style Selector="controls|TokenizingTextBoxItem:selected /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemAccentColorLight3}" />
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBoxItem:pressed /template/ Border#PART_Border">
-		<Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
+	<Style Selector="controls|TokenizingTextBoxItem:pressed /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemAccentColorDark1}" />
 	</Style>
 
-	<Style Selector="Controls|TokenizingTextBoxItem:pointerover /template/ Border#PART_Border">
-		<Setter Property="Background" Value="{DynamicResource SystemColorHotlightColor}" />
+	<Style Selector="controls|TokenizingTextBoxItem:pointerover /template/ Border#PART_Border">
+		<Setter Property="Background" Value="{DynamicResource SystemAccentColorLight2}" />
 	</Style>
 </Styles>

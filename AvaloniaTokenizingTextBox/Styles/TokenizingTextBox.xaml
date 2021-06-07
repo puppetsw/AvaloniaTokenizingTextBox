@@ -4,7 +4,7 @@
 
     <Design.PreviewWith>
         <DockPanel Height="100">
-            <controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" InputText="Test String">
+            <controls:TokenizingTextBox Width="500" DockPanel.Dock="Top" Margin="10" Text="Test String">
                 <controls:TokenizingTextBoxItem>
                     Text
                 </controls:TokenizingTextBoxItem>
@@ -26,27 +26,37 @@
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
+            <ControlTemplate>
+                <Panel>
                     <Border Name="PART_OuterBorder"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <StackPanel VerticalAlignment="Center">
-                            <controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
-                                                          StretchChild="Last">
-                                <ItemsPresenter Name="PART_ItemsPresenter"
-                                                Items="{TemplateBinding Items}"
-                                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                ItemTemplate="{TemplateBinding ItemTemplate}" />
-                                <controls:TokenTextBox Name="PART_TextBox" Classes="Input"
-                                                       Text="{TemplateBinding InputText, Mode=TwoWay}"
-                                                       MinHeight="{TemplateBinding MinHeight}"
-                                                       Padding="{TemplateBinding Padding}" />
-                            </controls:TokenizingWrapPanel>
-                        </StackPanel>
+                        <controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
+                                                      StretchChild="Last">
+                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                            Items="{TemplateBinding Items}"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                                            ItemTemplate="{TemplateBinding ItemTemplate}" />
+                            <controls:TokenTextBox Name="PART_TextBox" Classes="TokenInput"
+                                                   Text="{TemplateBinding Text, Mode=TwoWay}"
+                                                   MinHeight="{TemplateBinding MinHeight}"
+                                                   Padding="{TemplateBinding Padding}" />
+                        </controls:TokenizingWrapPanel>
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
+                    <Popup Name="PART_Popup"
+                           MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                           PlacementTarget="{TemplateBinding}"
+                           IsLightDismissEnabled="True">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1">
+                            <ListBox Name="PART_SearchListBox"
+                                     BorderThickness="0"
+                                     Items="{TemplateBinding SearchResults}"
+                                     ItemTemplate="{TemplateBinding ItemTemplate}" />
+                        </Border>
+                    </Popup>
+                </Panel>
+            </ControlTemplate>
         </Setter>
     </Style>
 
@@ -61,7 +71,7 @@
     </Style>
 
     <!--TextBox Styles-->
-    <Style Selector="TextBox.Input">
+    <Style Selector="TextBox.TokenInput">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0" />
@@ -69,13 +79,13 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style Selector="TextBox.Input:focus /template/ Border#PART_BorderElement">
+    <Style Selector="TextBox.TokenInput:focus /template/ Border#PART_BorderElement">
         <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
     </Style>
 
-    <Style Selector="TextBox.Input:pointerover /template/ Border#PART_BorderElement">
+    <Style Selector="TextBox.TokenInput:pointerover /template/ Border#PART_BorderElement">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
     </Style>

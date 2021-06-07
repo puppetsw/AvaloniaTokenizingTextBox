@@ -24,49 +24,47 @@ namespace AvaloniaTokenizingTextBox.Controls
 
         public static readonly StyledProperty<double> VerticalSpacingProperty =
                             AvaloniaProperty.Register<TokenizingWrapPanel, double>(nameof(VerticalSpacing), notifying: LayoutPropertyChanged);
+        
         public double HorizontalSpacing
         {
-            get { return GetValue(HorizontalSpacingProperty); }
-            set { SetValue(HorizontalSpacingProperty, value); }
+            get => GetValue(HorizontalSpacingProperty);
+            set => SetValue(HorizontalSpacingProperty, value);
         }
 
         public Thickness Padding
         {
-            get { return GetValue(PaddingProperty); }
-            set { SetValue(PaddingProperty, value); }
+            get => GetValue(PaddingProperty);
+            set => SetValue(PaddingProperty, value);
         }
 
         public StretchChild StretchChild
         {
-            get { return GetValue(StretchChildProperty); }
-            set { SetValue(StretchChildProperty, value); }
+            get => GetValue(StretchChildProperty);
+            set => SetValue(StretchChildProperty, value);
         }
 
         public double VerticalSpacing
         {
-            get { return GetValue(VerticalSpacingProperty); }
-            set { SetValue(VerticalSpacingProperty, value); }
+            get => GetValue(VerticalSpacingProperty);
+            set => SetValue(VerticalSpacingProperty, value);
         }
         private struct UvMeasure
         {
             internal static readonly UvMeasure Zero = default;
-
             internal double U { get; set; }
-
             internal double V { get; set; }
-
             public UvMeasure(Orientation orientation, double width, double height) : this()
             {
-                if (orientation == Orientation.Horizontal)
+                switch (orientation)
                 {
-                    U = width;
-                    V = height;
-                }
-
-                if (orientation == Orientation.Vertical)
-                {
-                    U = height;
-                    V = width;
+                    case Orientation.Horizontal:
+                        U = width;
+                        V = height;
+                        break;
+                    case Orientation.Vertical:
+                        U = height;
+                        V = width;
+                        break;
                 }
             }
         }
@@ -86,7 +84,7 @@ namespace AvaloniaTokenizingTextBox.Controls
                 {
                     if (nestedPanel.Children.Count > 0)
                     {
-                        var nestedIndex = nestedPanel.Children.Count;
+                        int nestedIndex = nestedPanel.Children.Count;
                         for (var i = 0; i < nestedIndex; i++)
                         {
                             arrange(nestedPanel.Children[i], isLast && (nestedIndex - i) == 1);
@@ -114,21 +112,16 @@ namespace AvaloniaTokenizingTextBox.Controls
                 }
 
                 // place the item
-                if (Orientation == Orientation.Horizontal)
-                {
-                    child.Arrange(new Rect(position.U, position.V, desiredMeasure.U, desiredMeasure.V));
-                }
-                else
-                {
-                    child.Arrange(new Rect(position.V, position.U, desiredMeasure.V, desiredMeasure.U));
-                }
+                child.Arrange(Orientation == Orientation.Horizontal
+                    ? new Rect(position.U, position.V, desiredMeasure.U, desiredMeasure.V)
+                    : new Rect(position.V, position.U, desiredMeasure.V, desiredMeasure.U));
 
                 // adjust the location for the next items
                 position.U += desiredMeasure.U + spacingMeasure.U;
                 currentV = Math.Max(desiredMeasure.V, currentV);
             }
 
-            var lastIndex = Children.Count;
+            int lastIndex = Children.Count;
             for (var i = 0; i < lastIndex; i++)
             {
                 arrange(Children[i], (lastIndex - i) == 1);

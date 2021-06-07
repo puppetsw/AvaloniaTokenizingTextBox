@@ -20,6 +20,8 @@
       <Generator></Generator>
     </AvaloniaResource>
     <None Remove="Styles\TokenTextBox.xaml" />
+    <None Remove="Controls\TestControl.xaml" />
+    <None Remove="Styles\AutoCompleteBox.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.5" />
