@@ -19,6 +19,15 @@ Based on work by [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
 </DockPanel>
 ```
 
+## TODO
+* Cleanup main control file
+* Remove Listbox inheritence
+* Added TemplatedControl inheritence
+* Create Tokens Enumerable property
+* Create SelectedToken property
+* Re-organise OnKeyDown events
+* ...pretty much an overhaul of everything
+
 ## Licence
 
 AvaloniaTokenizingTextBox is licensed under the [MIT license](https://github.com/puppetsw/AvaloniaTokenizingTextBox/blob/master/LICENSE).
