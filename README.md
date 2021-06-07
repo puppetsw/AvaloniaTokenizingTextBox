@@ -16,7 +16,8 @@ Based on work by [Jöran Malek](https://github.com/iterate-ch/tokenizingtextbox)
   <c:TokenizingTextBox
     TokenDelimiter=";"
     Items="{Binding Tokens}"
-    SelectedItem="{Binding SelectedItem}" />
+    SelectedItem="{Binding SelectedItem}"
+    SearchSource="{Binding SearchSourceList}"/>
 </DockPanel>
 ```
 
