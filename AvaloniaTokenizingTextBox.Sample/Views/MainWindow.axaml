@@ -20,8 +20,10 @@
                              Height="30"
                              Items="{Binding Tokens}"
                              SelectedItem="{Binding SelectedItem}"
-                             SearchSource="{Binding SelectableTokens}" />
-
+                             SearchSource="{Binding SelectableTokens}" 
+                             />
+        <Button Content="Test" Command="{Binding TestCommand}" />
+        
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Subject" DockPanel.Dock="Left" VerticalAlignment="Center" />
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Message" DockPanel.Dock="Left" VerticalAlignment="Top" />

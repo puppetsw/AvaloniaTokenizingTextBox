@@ -8,13 +8,14 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Generators;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Selection;
 using Avalonia.Controls.Templates;
 using Avalonia.Controls.Utils;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Styling;
+using Avalonia.VisualTree;
 
 namespace AvaloniaTokenizingTextBox.Controls
 {
@@ -87,15 +88,13 @@ namespace AvaloniaTokenizingTextBox.Controls
     /// <summary>
     /// A text input control that displays tokens.
     /// </summary>
-    public class TokenizingTextBox : ListBox
+    public class TokenizingTextBox : SelectingItemsControl
     {
         private const string PART_TEXT_BOX = "PART_TextBox";
         private const string PART_WRAP_PANEL = "PART_WrapPanel";
         private const string PART_POPUP = "PART_Popup";
         private const string PART_SEARCH_LIST_BOX = "PART_SearchListBox";
 
-        private const string DEFAULT_DELIMITER = ";";
-        
         private CancellationTokenSource? _cancellationTokenSource = new();
 
         private IEnumerable<string> _searchResults = new AvaloniaList<string>();
@@ -111,16 +110,10 @@ namespace AvaloniaTokenizingTextBox.Controls
         private ISelectionAdapter _adapter;
         private object _selectedSearchResult;
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            Console.WriteLine($"Key pressed {e.Key}");
-            base.OnKeyDown(e);
-        }
-
         /// <summary>
         /// The default value for the <see cref="ItemsControl.ItemsPanel"/> property.
         /// </summary>
-        public static readonly FuncTemplate<IPanel> DefaultPanel =
+        private static readonly FuncTemplate<IPanel> DefaultPanel =
             new(() => new StackPanel {Orientation = Orientation.Horizontal});
 
         /// <summary>
@@ -207,7 +200,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             get => _selectedSearchResult;
             set => SetAndRaise(SelectedSearchResultProperty, ref _selectedSearchResult, value);
         }
-
+        
         static TokenizingTextBox()
         {
             ItemsPanelProperty.OverrideDefaultValue<TokenizingTextBox>(DefaultPanel);
@@ -216,12 +209,23 @@ namespace AvaloniaTokenizingTextBox.Controls
             SelectedSearchResultProperty.Changed.AddClassHandler<TokenizingTextBox>((x, e) => x.OnSelectedSearchResultChanged(e));
         }
 
+        public TokenizingTextBox()
+        {
+            SelectionChanged += OnSelectionChanged;
+            Selection = new SelectionModel<string>();
+        }
+
+        private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            Console.WriteLine($"Selection changed {e.AddedItems}");
+        }
+
         protected override IItemContainerGenerator CreateItemContainerGenerator()
         {
             return new ItemContainerGenerator<TokenizingTextBoxItem>(
                 this,
-                ContentControl.ContentProperty,
-                ContentControl.ContentTemplateProperty);
+                TokenizingTextBoxItem.ContentProperty,
+                TokenizingTextBoxItem.ContentTemplateProperty);
         }
 
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -231,7 +235,7 @@ namespace AvaloniaTokenizingTextBox.Controls
             if (_textBox != null && _wrapPanel != null)
             {
                 _textBox.RemoveHandler(TextInputEvent, TextBox_TextChanged);
-                _textBox.MyKeyDown -= TextBox_KeyDown;
+                _textBox.BackKeyDown -= TextBox_KeyDown;
                 _textBox.GotFocus -= TextBox_GotFocus;
                 _wrapPanel.KeyDown -= WrapPanel_KeyDown;
             }
@@ -244,9 +248,43 @@ namespace AvaloniaTokenizingTextBox.Controls
             if (_textBox != null && _wrapPanel != null)
             {
                 _textBox.AddHandler(TextInputEvent, TextBox_TextChanged, RoutingStrategies.Tunnel);
-                _textBox.MyKeyDown += TextBox_KeyDown;
+                _textBox.BackKeyDown += TextBox_KeyDown;
                 _textBox.GotFocus += TextBox_GotFocus;
                 _wrapPanel.KeyDown += WrapPanel_KeyDown;
+            }
+        }
+        
+        protected override void OnPointerPressed(PointerPressedEventArgs e)
+        {
+            base.OnPointerPressed(e);
+
+            if (e.Source is IVisual source)
+            {
+                var point = e.GetCurrentPoint(source);
+
+                if (point.Properties.IsLeftButtonPressed || point.Properties.IsRightButtonPressed)
+                {
+                    e.Handled = UpdateSelectionFromEventSource(
+                        e.Source,
+                        true,
+                        e.KeyModifiers.HasAllFlags(KeyModifiers.Shift),
+                        e.KeyModifiers.HasAllFlags(KeyModifiers.Control),
+                        point.Properties.IsRightButtonPressed);
+                }
+            }
+        }
+        
+        protected override void OnGotFocus(GotFocusEventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            if (e.NavigationMethod == NavigationMethod.Directional)
+            {
+                e.Handled = UpdateSelectionFromEventSource(
+                    e.Source,
+                    true,
+                    e.KeyModifiers.HasAllFlags(KeyModifiers.Shift),
+                    e.KeyModifiers.HasAllFlags(KeyModifiers.Control));
             }
         }
 
@@ -263,13 +301,13 @@ namespace AvaloniaTokenizingTextBox.Controls
         private void OnAdapterSelectionComplete(object sender, RoutedEventArgs e)
         {
             _textBox?.Focus();
-            Console.WriteLine("Selection complete.");
+            //Console.WriteLine("Selection complete.");
         }
 
         private void OnAdapterSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectedSearchResult = SelectionAdapter.SelectedItem;
-            Console.WriteLine("Selection changed.");
+            //Console.WriteLine("Selection changed.");
         }
 
         private void OnTextPropertyChanged(AvaloniaPropertyChangedEventArgs e)

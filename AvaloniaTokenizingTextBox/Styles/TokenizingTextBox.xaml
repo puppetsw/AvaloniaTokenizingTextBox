@@ -38,7 +38,7 @@
                                             ItemsPanel="{TemplateBinding ItemsPanel}"
                                             ItemTemplate="{TemplateBinding ItemTemplate}" />
                             <controls:TokenTextBox Name="PART_TextBox" Classes="TokenInput"
-                                                   Text="{TemplateBinding Text, Mode=TwoWay}"
+                                                   Text="{TemplateBinding Text}"
                                                    MinHeight="{TemplateBinding MinHeight}"
                                                    Padding="{TemplateBinding Padding}" />
                         </controls:TokenizingWrapPanel>

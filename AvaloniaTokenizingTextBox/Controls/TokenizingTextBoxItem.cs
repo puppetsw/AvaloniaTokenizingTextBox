@@ -16,7 +16,7 @@ namespace AvaloniaTokenizingTextBox.Controls
     [PseudoClasses(":pressed", ":selected")]
     public class TokenizingTextBoxItem : ContentControl, ISelectable
     {
-        private const string PART_Button = "PART_Button";
+        private const string PART_BUTTON = "PART_Button";
         private Button? _button;
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace AvaloniaTokenizingTextBox.Controls
         /// </summary>
         public bool IsSelected
         {
-            get { return GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            get => GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
         }
 
         static TokenizingTextBoxItem()
@@ -50,7 +50,7 @@ namespace AvaloniaTokenizingTextBox.Controls
                 _button.Click -= Button_Click;
             }
 
-            _button = (Button)e.NameScope.Get<Control>(PART_Button);
+            _button = (Button)e.NameScope.Get<Control>(PART_BUTTON);
 
             if (_button != null)
             {
