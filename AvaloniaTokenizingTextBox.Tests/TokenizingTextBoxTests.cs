@@ -1,41 +1,36 @@
-using System.Collections.Generic;
-using System.Linq;
-using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Layout;
 using AvaloniaTokenizingTextBox.Controls;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace AvaloniaTokenizingTextBox.Tests
+namespace AvaloniaTokenizingTextBox.Tests;
+
+public class TokenizingTextBoxTests
 {
-    public class TokenizingTextBoxTests
+    private readonly ITestOutputHelper _output;
+
+    public TokenizingTextBoxTests(ITestOutputHelper output) => _output = output;
+
+    [Fact]
+    public void DefaultBindingMode_Should_Be_TwoWay()
     {
-        private readonly ITestOutputHelper _output;
+        Assert.Equal(BindingMode.TwoWay, TokenizingTextBox.TextProperty.GetMetadata(typeof(TokenizingTextBox)).DefaultBindingMode);
+    }
 
-        public TokenizingTextBoxTests(ITestOutputHelper output) => _output = output;
-
-        [Fact]
-        public void DefaultBindingMode_Should_Be_TwoWay()
+    [Fact]
+    public void SelectableTokens_Should_Filter_With_Contains_Until_Space()
+    {
+        var selectableTokens = new List<string>
         {
-            Assert.Equal(BindingMode.TwoWay, TokenizingTextBox.TextProperty.GetMetadata(typeof(TokenizingTextBox)).DefaultBindingMode);
-        }
+            "test@gmail.com",
+            "test1@gmail.com",
+            "anothertest@gmail.com",
+            "what@gmail.com",
+            "test fake@gmail.com"
+        };
 
-        [Fact]
-        public void SelectableTokens_Should_Filter_With_Contains_Until_Space()
-        {
-            var selectableTokens = new List<string>
-            {
-                "test@gmail.com",
-                "test1@gmail.com",
-                "anothertest@gmail.com",
-                "what@gmail.com",
-                "test fake@gmail.com"
-            };
+        var filtered = selectableTokens.Where(x => x.Contains("test")).ToList();
 
-            var filtered = selectableTokens.Where(x => x.Contains("test")).ToList();
-
-            _output.WriteLine(string.Join(',', filtered));
-        }
+        _output.WriteLine(string.Join(',', filtered));
     }
 }

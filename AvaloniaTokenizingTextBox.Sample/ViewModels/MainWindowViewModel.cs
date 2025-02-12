@@ -1,33 +1,35 @@
 using ReactiveUI;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
-namespace AvaloniaTokenizingTextBox.Sample.ViewModels
+namespace AvaloniaTokenizingTextBox.Sample.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    public ObservableCollection<string> SelectableTokens { get; }
+
+    private string? _selectedItem;
+    public string? SelectedItem
     {
-        private ObservableCollection<string> _tokens = new();
+        get => _selectedItem;
+        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
+    }
 
-        public ObservableCollection<string> SelectableTokens { get; } = new() { "anothertest@gmail.com", "anothertest2@gmail.com", "test@gmail.com" };
+    public ObservableCollection<string> Tokens { get; }
 
-        public object? SelectedItem { get; set; }
-        
-        public ObservableCollection<string> Tokens
-        {
-            get => _tokens;
-            set => this.RaiseAndSetIfChanged(ref _tokens, value);
-        }
+    public ICommand TestCommand { get; }
+    
+    public MainWindowViewModel()
+    {
+        SelectableTokens = ["anothertest@gmail.com", "anothertest2@gmail.com", "test@gmail.com", "john.mcclane@hotmail.com"];
+        Tokens = [];
+        TestCommand = ReactiveCommand.Create(Test);
+    }
 
-        public ICommand TestCommand { get; }
-        
-        public MainWindowViewModel()
-        {
-            TestCommand = ReactiveCommand.Create(Test);
-        }
-
-        private void Test()
-        {
-            throw new System.NotImplementedException();
-        }
+    private void Test()
+    {
+        Debug.WriteLine("Selected tokens: " + string.Join(',', Tokens));
+        //throw new System.NotImplementedException();
     }
 }
