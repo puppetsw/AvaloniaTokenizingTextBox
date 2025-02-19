@@ -14,18 +14,20 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Grid Margin="10" ShowGridLines="False" RowDefinitions="30,10,30,10,*" ColumnDefinitions="80,*,*">
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="To" VerticalAlignment="Center" />
-        <c:TokenizingTextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+    <Grid Margin="10" ShowGridLines="False" RowDefinitions="30,10,30,10,30,10,*" ColumnDefinitions="80,*,*">
+        <Button Grid.Row="0" Grid.Column="0" Content="Send" Command="{Binding TestCommand}" />
+      
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="To" VerticalAlignment="Center" />
+        <c:TokenizingTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                              Height="30"
-                             Items="{Binding Tokens}"
+                             ItemsSource="{Binding Tokens}"
                              SelectedItem="{Binding SelectedItem}"
-                             SearchSource="{Binding SelectableTokens}" 
+                             SearchSource="{Binding SelectableTokens}"
                              />
-        <Button Content="Test" Command="{Binding TestCommand}" />
         
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Subject" DockPanel.Dock="Left" VerticalAlignment="Center" />
-        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Message" DockPanel.Dock="Left" VerticalAlignment="Top" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Subject" DockPanel.Dock="Left" VerticalAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+      
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Message" DockPanel.Dock="Left" VerticalAlignment="Top" />
     </Grid>
 </Window>

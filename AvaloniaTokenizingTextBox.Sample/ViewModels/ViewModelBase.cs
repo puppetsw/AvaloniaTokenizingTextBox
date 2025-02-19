@@ -1,11 +1,7 @@
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AvaloniaTokenizingTextBox.Sample.ViewModels
+namespace AvaloniaTokenizingTextBox.Sample.ViewModels;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

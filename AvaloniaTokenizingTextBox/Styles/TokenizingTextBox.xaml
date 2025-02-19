@@ -34,9 +34,7 @@
                         <controls:TokenizingWrapPanel Name="PART_WrapPanel" Margin="1,0,0,0"
                                                       StretchChild="Last">
                             <ItemsPresenter Name="PART_ItemsPresenter"
-                                            Items="{TemplateBinding Items}"
-                                            ItemsPanel="{TemplateBinding ItemsPanel}"
-                                            ItemTemplate="{TemplateBinding ItemTemplate}" />
+                                            ItemsPanel="{TemplateBinding ItemsPanel}" />
                             <controls:TokenTextBox Name="PART_TextBox" Classes="TokenInput"
                                                    Text="{TemplateBinding Text}"
                                                    MinHeight="{TemplateBinding MinHeight}"
@@ -51,7 +49,7 @@
                                 BorderThickness="1">
                             <ListBox Name="PART_SearchListBox"
                                      BorderThickness="0"
-                                     Items="{TemplateBinding SearchResults}"
+                                     ItemsSource="{TemplateBinding SearchResults}"
                                      ItemTemplate="{TemplateBinding ItemTemplate}" />
                         </Border>
                     </Popup>

@@ -1,14 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>True</ImplicitUsings>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Styles\Generic.xaml" />
-    <None Remove="Styles\TokenizingTextBox.xaml" />
-    <None Remove="Styles\TokenizingTextBoxItem.xaml" />
-  </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Styles\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -17,16 +14,11 @@
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
     <AvaloniaResource Include="Styles\TokenizingTextBox.xaml">
-      <Generator></Generator>
+      <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
-    <None Remove="Styles\TokenTextBox.xaml" />
-    <None Remove="Controls\TestControl.xaml" />
-    <None Remove="Styles\AutoCompleteBox.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.5" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.3" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.2.3" />
   </ItemGroup>
 </Project>
